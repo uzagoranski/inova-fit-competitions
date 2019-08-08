@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://imgur.com/YLGoIOk">
+  <img src="https://i.imgur.com/YLGoIOk.png">
 </p>
 
 ## Getting started
@@ -64,5 +64,5 @@ MongoDB 4.0.11
 
 
 <p align="center">
-  <img src="https://imgur.com/1aYsGX1">
+  <img src="https://i.imgur.com/1aYsGX1.png">
 </p>
