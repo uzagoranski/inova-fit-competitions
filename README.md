@@ -21,7 +21,7 @@ MongoDB 4.0.11
 
 ## Getting started
 
-You can view a live demo over at
+You can view a live demo over at https://secret-eyrie-15857.herokuapp.com/ 
 
 To get app running locally:
 * Download or clone this project
