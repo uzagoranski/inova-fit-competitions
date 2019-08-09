@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
+const path = require("path");
 const passport = require("passport");
 
 const users = require("./routes/api/users");
@@ -47,6 +48,16 @@ app.use("/api/rounds", rounds);
 app.use("/api/strava", strava);
 app.use("/api/stats", stats);
 app.use("/api/leaderboard", leaderboard);
+
+// Serve static assets if in production
+if(process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+  });
+}
 
 const port = process.env.PORT || 5000; 
 

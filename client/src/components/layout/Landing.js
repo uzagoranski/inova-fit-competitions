@@ -20,14 +20,14 @@ class Landing extends Component {
   render() {
     const { user } = this.props.auth;
     return (
-      <div style={{ minHeight: "75vh" }} className="container valign-wrapper">
+      <div style={{ minHeight: "75vh", marginTop:"100px"}} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">            
             {!this.props.auth.isAuthenticated ? 
             <Fragment>
               <h4>
-                <b>Inova IT</b> {" "}
-                <span style={{ fontFamily: "monospace" }}>competition platform</span> 
+                <b>Welcome</b> {" "}
+                <span style={{ fontFamily: "monospace" }}>to the platform</span> 
               </h4>
               <p className="flow-text grey-text text-darken-1">
               Manage competitions, connect with Strava or search through data
@@ -36,7 +36,7 @@ class Landing extends Component {
                 <Link
                   to="/register"
                   style={{
-                    width: "140px",
+                    width: "auto",
                     borderRadius: "3px",
                     letterSpacing: "1.5px"
                   }}
@@ -49,11 +49,12 @@ class Landing extends Component {
                 <Link
                   to="/login"
                   style={{
-                    width: "140px",
+                    width: "auto",
                     borderRadius: "3px",
-                    letterSpacing: "1.5px"
+                    letterSpacing: "1.5px",
+                    float:"right"
                   }}
-                  className="btn btn-large waves-effect orange hoverable black-text accent-3"
+                  className="btn btn-large waves-effect green hoverable accent-3"
                 >
                   Log In
                 </Link>
@@ -86,7 +87,7 @@ class Landing extends Component {
             <br/>
             <img style={{
               marginTop: "2rem",
-              maxWidth: "1000px"
+              maxWidth: "90%"
             }} src={strava} alt="Strava" />
           </div>
         </div>

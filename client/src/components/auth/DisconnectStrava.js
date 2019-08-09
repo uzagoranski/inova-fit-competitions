@@ -20,7 +20,7 @@ class DisconnectStrava extends Component {
   render() {
     const { user } = this.props.auth;
     return (
-      <div style={{ minHeight: "75vh" }} className="container valign-wrapper">
+      <div style={{ minHeight: "75vh", marginTop: "130px" }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">  
             <Link to={"/account/" + user.id } className="btn-flat waves-effect">
@@ -38,7 +38,7 @@ class DisconnectStrava extends Component {
             <br/>
             <img style={{
               marginTop: "2rem",
-              maxWidth: "1000px"
+              maxWidth: "90%"
             }} src={strava} alt="Strava" />
           </div>
         </div>

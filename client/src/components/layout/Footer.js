@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import '../../App.css'; 
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
@@ -33,15 +34,15 @@ class Footer extends Component {
                                 { this.props.auth.isAuthenticated ?    
                                 <Fragment>
                                     <li>
-                                        <a href="/competitions">Competitions </a>
+                                        <Link to="/competitions">Competitions </Link>
                                     </li>
                                     <li>
-                                        <a href={"/account/" + this.props.auth.user.id}>Account</a>
+                                        <Link to={"/account/" + this.props.auth.user.id}>Account</Link>
                                     </li>
                                     <li>
                                     <button
                                         style={{
-                                        width: "118px",
+                                        width: "auto",
                                         borderRadius: "3px",
                                         letterSpacing: "1.5px",
                                         marginTop: "1rem",
@@ -58,10 +59,10 @@ class Footer extends Component {
                                 :
                                 <Fragment>
                                     <li>
-                                        <a href="/login">Login</a>
+                                        <Link to="/login">Login</Link>
                                     </li>                                    
                                     <li>
-                                        <a href="/register">Register</a>
+                                        <Link to="/register">Register</Link>
                                     </li>
                                 </Fragment>                                
                                 }                               
