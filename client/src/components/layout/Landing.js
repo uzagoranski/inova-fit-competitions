@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
+import Media from 'react-media';
 import strava from "../../static/img/strava.png";
 
 class Landing extends Component {
@@ -45,20 +46,43 @@ class Landing extends Component {
                   Register
                 </Link>
               </div>
-              <div className="col s6">
-                <Link
-                  to="/login"
-                  style={{
-                    width: "auto",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    float:"right"
-                  }}
-                  className="btn btn-large waves-effect green hoverable accent-3"
-                >
-                  Log In
-                </Link>
-              </div>
+              <Media query="(max-width: 350px)">
+                  {matches =>
+                      matches ? 
+                      (
+                      <div className="col s6">
+                        <Link
+                          to="/login"
+                          style={{
+                            width: "auto",
+                            borderRadius: "3px",
+                            letterSpacing: "1.5px",
+                            float: "right"
+                          }}
+                          className="btn btn-large waves-effect green hoverable accent-3"
+                        >
+                          Log In
+                        </Link>
+                      </div>
+                      )
+                      :
+                      (
+                      <div className="col s6">
+                        <Link
+                          to="/login"
+                          style={{
+                            width: "auto",
+                            borderRadius: "3px",
+                            letterSpacing: "1.5px"
+                          }}
+                          className="btn btn-large waves-effect green hoverable accent-3"
+                        >
+                          Log In
+                        </Link>
+                      </div>
+                      )
+                  }
+              </Media>
             </Fragment>
             : 
             <Fragment>

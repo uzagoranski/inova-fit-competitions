@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const path = require("path");
 const passport = require("passport");
-
 const users = require("./routes/api/users");
 const competitions = require("./routes/api/competitions");
 const rounds = require("./routes/api/rounds");

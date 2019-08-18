@@ -45,7 +45,7 @@ class Competition extends Component {
                                 <div className="col s8">
                                     <a href="/competitions" className="btn-flat waves-effect">
                                     <i className="material-icons left">keyboard_backspace</i> Back to
-                                    home
+                                    list
                                     </a>
                                     <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                         <h4>
@@ -149,7 +149,7 @@ class Competition extends Component {
                                 <div className="col s8">
                                     <a href="/competitions" className="btn-flat waves-effect">
                                     <i className="material-icons left">keyboard_backspace</i> Back to
-                                    home
+                                    list
                                     </a>
                                     <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                         <h4>

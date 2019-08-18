@@ -16,6 +16,7 @@ const Stats = require('../../models/Stats');
 // @access  Private
 router.get('/:_id', (req, res) => {
     Round.find({ "competitionId": req.params._id })
+        .sort({ date: 1 })
         .then(rounds => res.json(rounds))
         .catch(err => res.status(404).json({success: false}));
 });
