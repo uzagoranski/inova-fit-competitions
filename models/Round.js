@@ -8,11 +8,11 @@ const RoundSchema = new Schema({
         default: Date.now,
         required: true
     },
-    competitionId: {
+    competitionID: {
         type: String,
         required: true
     },
-    stravaSegmentId: {
+    stravaSegmentID: {
         type: String,
         required: true
     }

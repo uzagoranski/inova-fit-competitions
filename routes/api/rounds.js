@@ -1,69 +1,45 @@
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
 
 // Load input validation
 const validateAddRoundInput = require("../../validation/addRound");
 
-// Round model
-const Round = require('../../models/Round');
+// Service
+const roundsService = require('../../service/rounds');
 
-// Stats model
-const Stats = require('../../models/Stats');
-
-// @route   GET api/rounds
+// @route   GET api/rounds/:_id
 // @desc    Get all rounds from selected competition
 // @access  Private
-router.get('/:_id', (req, res) => {
-    Round.find({ "competitionId": req.params._id })
-        .sort({ date: 1 })
-        .then(rounds => res.json(rounds))
-        .catch(err => res.status(404).json({success: false}));
+router.get('/:_id', async(req, res) => {
+
+    res.json(await roundsService.getRounds(req.params._id));
+
 });
 
 // @route   POST api/rounds
 // @desc    Post a new round
 // @access  Private
-router.post('/', (req, res) => {
+router.post('/', async(req, res) => {
 
-     // Form validation
-     const { errors, isValid } = validateAddRoundInput(req.body);
+    // Form validation
+    const { errors, isValid } = validateAddRoundInput(req.body);
 
-     // Check validation
-     if (!isValid) {
-       return res.status(400).json(errors);
-     }
+    // Check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
 
-    const newRound = new Round({
-        date: req.body.date,
-        competitionId: req.body.competitionId,
-        stravaSegmentId: req.body.stravaSegmentId
-    });
-    newRound.save().then(round => {
-        axios.get(`http://localhost:5000/api/stats/${round.competitionId}/${round.stravaSegmentId}`)
-            .catch(err => res.status(404).json({success: false}));   
-            
-        res.json(round)
-    });
+    res.json(await roundsService.addRound(req.body));
+
 });
 
-// @route   DELETE api/rounds
+// @route   DELETE api/rounds/:_id
 // @desc    Delete a round
 // @access  Private
-router.delete('/:id', (req, res) => {
-    Round.findById(req.params.id)
-        .then(round => {
+router.delete('/:_id', async(req, res) => {
+    
+    res.json(await roundsService.deleteRound(req.params._id));
 
-            let competitionID = round.competitionId;
-            let stravaSegmentID = round.stravaSegmentId;
-
-            round.remove()
-                .then(() => res.json({success: true}))
-                .catch(err => res.status(404).json({success: false}));
-
-            Stats.deleteMany({ "competitionID": competitionID, "segmentID": stravaSegmentID })
-                .catch(err => res.status(404).json({success: false}));
-        })
 });
 
 module.exports = router;

@@ -78,7 +78,7 @@ class Competition extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        { rounds.map(({ _id, date, stravaSegmentId }) => (
+                                        { rounds.map(({ _id, date, stravaSegmentID }) => (
                                             <tr key={_id}>
                                                 <th scope="row"><Button
                                                         className="btn btn-small waves-effect waves-light hoverable red accent-3"                                            
@@ -94,7 +94,7 @@ class Competition extends Component {
                                                     { date.substr(11, 5) }
                                                 </td>
                                                 <td>
-                                                    {stravaSegmentId}
+                                                    {stravaSegmentID}
                                                 </td>
                                             </tr>   
                                         ))}                 
