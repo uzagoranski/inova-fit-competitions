@@ -50,7 +50,7 @@ module.exports.getUserByID = async function getUserByID(_id) {
 }
 
 // Get all Strava authenticated users
-module.exports.getStravaUsers = async function getStravaUsers(stats, userID, competitionID, segmentID) {
+module.exports.getStravaUsers = async function getStravaUsers() {
   
   let response;
 

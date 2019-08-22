@@ -9,16 +9,37 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Uroš Zagoranski",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.3.1",
+    "@types/axios": "^0.14.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/body-parser": "^1.17.1",
+    "@types/express": "^4.17.1",
+    "@types/is-empty": "^1.2.0",
+    "@types/jsonwebtoken": "^8.3.3",
+    "@types/mongoose": "^5.5.13",
+    "@types/node": "^12.7.2",
+    "@types/npm": "^2.0.30",
+    "@types/passport": "^1.0.0",
+    "@types/passport-jwt": "^3.0.1",
+    "@types/query-string": "^6.3.0",
+    "@types/react-datepicker": "^2.8.1",
+    "@types/react-icons": "^3.0.0",
+    "@types/react-transition-group": "^4.2.2",
+    "@types/reactstrap": "^8.0.4",
+    "@types/request": "^2.48.2",
+    "@types/validator": "^10.11.3",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.2",
+    "date-fns": "^2.0.0",
     "express": "^4.17.1",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
@@ -36,6 +57,8 @@
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "ts-node-dev": "^1.0.0-pre.41",
+    "typescript": "^3.5.3"
   }
 }
