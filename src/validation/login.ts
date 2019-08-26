@@ -1,29 +1,87 @@
 import Validator from "validator";
 import isEmpty from "is-empty";
+const bcrypt = require("bcryptjs");
 
 // Interfaces
 import  { ILoginForm } from '../common/interfaces';
+import ValidationError from "../middleware/errors";
 
-module.exports = function validateLoginInput(data: ILoginForm) {
-  let errors: ILoginForm;
+// Repository
+const usersRepository = require('../repository/users');
 
-// Convert empty fields to an empty string so we can use validator functions
+module.exports = async function validateLoginInput(data: ILoginForm) {
+
+  // Find user by email
+  let user = await usersRepository.getUserByEmail(data.email);
+
+  // Convert empty fields to an empty string so we can use validator functions
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
 
-// Email checks
+  // Email checks
   if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
+    
+    try {
+      
+      throw new ValidationError("EmailEmpty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+    
   } else if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+
+    try {
+      
+      throw new ValidationError("EmailInvalid");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  // Password checks
+  } else if (Validator.isEmpty(data.password)) {
+
+    try {
+      
+      throw new ValidationError("PasswordEmpty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  } else if (!user) {
+
+    try {
+      
+      throw new ValidationError("UserNotFound");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  } else if (!await bcrypt.compare(data.password, user.password)) {
+
+    try {
+      
+      throw new ValidationError("PasswordIncorrect");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
   }
-  
-// Password checks
-  if (Validator.isEmpty(data.password)) {
-    errors.password = "Password field is required";
+  else {
+    return "ok";
   }
-return {
-    errors,
-    isValid: isEmpty(errors)
-  };
 };

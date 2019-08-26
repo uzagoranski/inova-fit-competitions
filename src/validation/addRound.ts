@@ -3,9 +3,15 @@ import isEmpty from "is-empty";
 
 // Interfaces
 import  { IAddRoundForm } from '../common/interfaces';
+import ValidationError from "../middleware/errors";
 
-module.exports = function validateAddRoundInput(data: IAddRoundForm) {
-  let errors: IAddRoundForm;
+// Repository
+const roundRepository = require('../repository/rounds');
+
+module.exports = async function validateAddRoundInput(data: IAddRoundForm) {
+
+  // Find competition by name
+  let round = await roundRepository.getRoundBySegmentId(data.stravaSegmentId);
 
   // Convert empty fields to an empty string so we can use validator functions
   data.date = !isEmpty(data.date) ? data.date : "";
@@ -13,16 +19,46 @@ module.exports = function validateAddRoundInput(data: IAddRoundForm) {
 
   // Date checks
   if (Validator.isEmpty(data.date)) {
-    errors.date = "Date field is required";
-  } 
+     
+    try {
+      
+      throw new ValidationError("DateEmpty");
 
+    } catch (err) {
+
+      return err;
+    
+    }
+    
   // Id checks
-  if (Validator.isEmpty(data.stravaSegmentId)) {
-    errors.stravaSegmentId = "Strava Segment ID field is required";
-  } 
+  } else if (Validator.isEmpty(data.stravaSegmentId)) {
+      
+    try {
+      
+      throw new ValidationError("StravaSegmentIdEmpty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+    
+  } else if(round) {
+       
+    try {
+      
+      throw new ValidationError("StravaSegmentIdAlreadyExists");
+
+    } catch (err) {
+
+      return err;
+    
+    }
   
-return {
-    errors,
-    isValid: isEmpty(errors)
-  };
+  } else {
+    
+    return "ok";
+
+  }
+ 
 };

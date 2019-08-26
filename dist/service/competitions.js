@@ -10,40 +10,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 // Repository
 const competitionsRepository = require('../repository/competitions');
-// Model
-const Competition = require('../models/Competition');
-// Full list of all competitions
-module.exports.getAllCompetitions = function getAllCompetitions() {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield competitionsRepository.getAllCompetitions();
-    });
-};
-// Add competition
-module.exports.addCompetition = function addCompetition(body) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            const newCompetition = new Competition({
-                name: body.name
-            });
-            response = yield competitionsRepository.addCompetition(newCompetition);
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Get current competition
-module.exports.getSelectedCompetition = function getSelectedCompetition(_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield competitionsRepository.getSelectedCompetition(_id);
-    });
-};
-// Delete competition
-module.exports.deleteCompetition = function deleteCompetition(_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield competitionsRepository.deleteCompetition(_id);
-    });
-};
+class CompetitionsClass {
+    // Full list of all competitions
+    getAllCompetitions() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield competitionsRepository.getAllCompetitions();
+        });
+    }
+    // Add competition
+    addCompetition(body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield competitionsRepository.addCompetition(body.name);
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+    // Get current competition
+    getSelectedCompetition(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return competitionsRepository.getSelectedCompetition(_id);
+        });
+    }
+    // Delete competition
+    deleteCompetition(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return competitionsRepository.deleteCompetition(_id);
+        });
+    }
+    // Get competition by name
+    getCompetitionByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return competitionsRepository.getCompetitionByName(name);
+        });
+    }
+}
+module.exports = new CompetitionsClass();
 //# sourceMappingURL=competitions.js.map

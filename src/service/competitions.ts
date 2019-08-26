@@ -1,9 +1,6 @@
 // Repository
 const competitionsRepository = require('../repository/competitions');
 
-// Model
-const Competition = require('../models/Competition');
-
 // Interfaces
 import  { IAddCompetitionForm } from '../common/interfaces';
 
@@ -21,12 +18,8 @@ class CompetitionsClass {
 
         let response;
 
-        try {
-            const newCompetition = new Competition({
-                name: body.name
-            });
-        
-            response = await competitionsRepository.addCompetition(newCompetition);
+        try {        
+            response = await competitionsRepository.addCompetition(body.name);
         }
         catch(err) {
             response = err;
@@ -47,6 +40,13 @@ class CompetitionsClass {
     async deleteCompetition(_id: string) { 
 
         return competitionsRepository.deleteCompetition(_id);
+
+    }
+
+    // Get competition by name
+    async getCompetitionByName(name: string) {
+
+        return competitionsRepository.getCompetitionByName(name);
 
     }
 }

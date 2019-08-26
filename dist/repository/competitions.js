@@ -15,55 +15,71 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Competition_1 = __importDefault(require("../models/Competition"));
 const Round_1 = __importDefault(require("../models/Round"));
 const Stats_1 = __importDefault(require("../models/Stats"));
-// Competitions list
-module.exports.getAllCompetitions = function getAllCompetitions() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            response = yield Competition_1.default.find().sort({ date: -1 });
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Add competition
-module.exports.addCompetition = function addCompetition(newCompetition) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            response = yield newCompetition.save();
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Get selected competition
-module.exports.getSelectedCompetition = function getSelectedCompetition(_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            response = yield Competition_1.default.findById(_id);
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Delete competition
-module.exports.deleteCompetition = function deleteCompetition(_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield Promise.all([Competition_1.default.findByIdAndDelete(_id), Round_1.default.deleteMany({ "competitionID": _id }), Stats_1.default.deleteMany({ "competitionID": _id })]);
-        }
-        catch (err) {
-            return err;
-        }
-        return JSON.stringify({ success: true });
-    });
-};
+class CompetitionsClass {
+    // Competitions list
+    getAllCompetitions() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield Competition_1.default.find().sort({ date: -1 });
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+    // Add competition
+    addCompetition(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield Competition_1.default.create({ name: name });
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+    // Get selected competition
+    getSelectedCompetition(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield Competition_1.default.findById(_id);
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+    // Delete competition
+    deleteCompetition(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield Promise.all([Competition_1.default.findByIdAndDelete(_id), Round_1.default.deleteMany({ "competitionID": _id }), Stats_1.default.deleteMany({ "competitionID": _id })]);
+            }
+            catch (err) {
+                return err;
+            }
+            return { success: true };
+        });
+    }
+    // Get competition by name
+    getCompetitionByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield Competition_1.default.find({ "name": name });
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+}
+module.exports = new CompetitionsClass();
 //# sourceMappingURL=competitions.js.map

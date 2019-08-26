@@ -15,58 +15,59 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 // Repository
 const leaderboardRepository = require('../repository/leaderboard');
-// Model
-const Leaderboard = require('../models/Leaderboard');
-// Add a new leaderboard
-module.exports.addLeaderboard = function addLeaderboard(competitionID, userID) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            let data = yield leaderboardRepository.getRelevantStats(competitionID, userID);
-            let name = "";
-            let totalTime = 0;
-            let averageTime = 0;
-            let totalDistance = 0;
-            let numberOfRounds = 0;
-            for (var i in data) {
-                numberOfRounds++;
-                totalTime += data[i].elapsedTime;
-                totalDistance += data[i].distance;
-                name = data[i].name;
+class LeaderboardClass {
+    // Add a new leaderboard
+    addLeaderboard(competitionID, userID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                let data = yield leaderboardRepository.getRelevantStats(competitionID, userID);
+                let name = "";
+                let totalTime = 0;
+                let averageTime = 0;
+                let totalDistance = 0;
+                let numberOfRounds = 0;
+                for (var i in data) {
+                    numberOfRounds++;
+                    totalTime += data[i].elapsedTime;
+                    totalDistance += data[i].distance;
+                    name = data[i].name;
+                }
+                averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100;
+                totalDistance = Math.round(totalDistance * 100) / 100;
+                const newLeaderboard = {
+                    userID: userID,
+                    name: name,
+                    competitionID: competitionID,
+                    averageTime: averageTime,
+                    totalDistance: totalDistance,
+                    numberOfRounds: numberOfRounds
+                };
+                response = yield leaderboardRepository.addLeaderboard(newLeaderboard.userID, newLeaderboard.name, newLeaderboard.competitionID, newLeaderboard.averageTime, newLeaderboard.totalDistance, newLeaderboard.numberOfRounds);
             }
-            averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100;
-            totalDistance = Math.round(totalDistance * 100) / 100;
-            const newLeaderboard = new Leaderboard({
-                userID: userID,
-                name: name,
-                competitionID: competitionID,
-                averageTime: averageTime,
-                totalDistance: totalDistance,
-                numberOfRounds: numberOfRounds
-            });
-            response = yield leaderboardRepository.addLeaderboard(newLeaderboard);
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Reload leaderboard for selected competition
-module.exports.reloadLeaderboard = function reloadLeaderboard(competitionID) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            let userIDs = yield leaderboardRepository.getDistinctUserIDs(competitionID);
-            for (let i in userIDs) {
-                yield axios_1.default.get(`http://localhost:5000/api/leaderboard/${competitionID}/${userIDs[i]}`);
+            catch (err) {
+                response = err;
             }
-            response = yield leaderboardRepository.getLeaderboard(competitionID);
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
+            return response;
+        });
+    }
+    // Reload leaderboard for selected competition
+    reloadLeaderboard(competitionID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                let userIDs = yield leaderboardRepository.getDistinctUserIDs(competitionID);
+                for (let i in userIDs) {
+                    yield axios_1.default.get(`http://localhost:5000/api/leaderboard/${competitionID}/${userIDs[i]}`);
+                }
+                response = yield leaderboardRepository.getLeaderboard(competitionID);
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+}
+module.exports = new LeaderboardClass();
 //# sourceMappingURL=leaderboard.js.map

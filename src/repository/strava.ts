@@ -30,7 +30,7 @@ class StravaClass {
         try {
             await Promise.all([User.findByIdAndUpdate(_id, { "stravaUserID": "", "stravaAccessToken": "", "stravaRefreshToken": "", "accessTokenExpirationDate": "" }), Stats.deleteMany({ "userID": _id }), Leaderboard.deleteMany({ "userID": _id })]);
 
-            response = JSON.stringify({ success: true });          
+            response = { success: true };          
         }
         catch(err) {
             response = err;

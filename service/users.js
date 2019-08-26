@@ -28,7 +28,7 @@ module.exports.register = async function register(body) {
   
       if (user) {
   
-        return JSON.stringify({ email: "Email already exists" });
+        return { email: "Email already exists" };
   
       } else {
   

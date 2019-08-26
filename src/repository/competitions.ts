@@ -1,5 +1,5 @@
 // Models
-import Competition, { ICompetition } from '../models/Competition';
+import Competition from '../models/Competition';
 import Round from '../models/Round';
 import Stats from '../models/Stats';
 
@@ -22,12 +22,12 @@ class CompetitionsClass {
     }
 
     // Add competition
-    async addCompetition(newCompetition: ICompetition) {
+    async addCompetition(name: String) {
         
         let response;
 
         try {    
-            response = await newCompetition.save();
+            response = await Competition.create({ name: name });
         }
         catch(err) {
             response = err;
@@ -65,6 +65,22 @@ class CompetitionsClass {
 
         return { success: true };
         
+    }
+
+      // Get competition by name
+      async getCompetitionByName(name: string) {
+        
+        let response;
+
+        try {    
+            response = await Competition.find({ "name": name });
+        }
+        catch(err) {
+            response = err;
+        }
+        
+        return response;
+
     }
 }
 

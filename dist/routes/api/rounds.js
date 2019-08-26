@@ -28,12 +28,13 @@ router.get('/:_id', (req, res) => __awaiter(this, void 0, void 0, function* () {
 // @access  Private
 router.post('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
     // Form validation
-    const { errors, isValid } = validateAddRoundInput(req.body);
-    // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
+    let validation = yield validateAddRoundInput(req.body);
+    if (validation == "ok") {
+        res.json(yield (roundsService.addRound(req.body)));
     }
-    res.json(yield roundsService.addRound(req.body));
+    else {
+        res.status(validation.statusCode).json(validation.message);
+    }
 }));
 // @route   DELETE api/rounds/:_id
 // @desc    Delete a round

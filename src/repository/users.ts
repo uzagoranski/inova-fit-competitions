@@ -1,5 +1,5 @@
 // Models
-import User, { IUser } from '../models/User';
+import User from '../models/User';
 
 class UsersClass {
 
@@ -20,12 +20,12 @@ class UsersClass {
   }
 
   // Add new user
-  async register(user: IUser) {
+  async register(name: string, email: string, password: string) {
     
     let response;
 
     try {
-      response = await user.save();
+      response = await User.create({ name: name, email: email, password: password });
     }
     catch(err) {
       response = err;

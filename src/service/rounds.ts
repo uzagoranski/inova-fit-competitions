@@ -4,9 +4,6 @@ const axios = require('axios');
 // Repository
 const roundsRepository = require('../repository/rounds');
 
-// Model
-const Round = require('../models/Round');
-
 // Interfaces
 import  { IAddRoundForm } from '../common/interfaces';
 
@@ -25,12 +22,12 @@ class RoundsClass {
         let response;
 
         try {
-            const newRound = new Round({
+            const newRound = {
                 date: body.date,
                 competitionID: body.competitionId,
                 stravaSegmentID: body.stravaSegmentId
-            });
-            let round = await roundsRepository.addRound(newRound);
+            }
+            let round = await roundsRepository.addRound(newRound.date, newRound.competitionID, newRound.stravaSegmentID);
 
             await axios.get(`http://localhost:5000/api/stats/${round.competitionID}/${round.stravaSegmentID}`);
                 
@@ -48,6 +45,13 @@ class RoundsClass {
     async deleteRound(_id: string) {
 
         return roundsRepository.deleteRound(_id);
+
+    }
+
+     // Get round by segment id
+     async getRoundBySegmentId(stravaSegmentID: string) {
+
+        return roundsRepository.getRoundBySegmentId(stravaSegmentID);
 
     }
 }

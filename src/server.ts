@@ -1,3 +1,5 @@
+import { IError } from "./common/interfaces";
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -21,7 +23,8 @@ app.use(
 app.use(bodyParser.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
+const keys = require("./config/keys");
+const db = keys.mongoURI;
 
 // Connect to MongoDB
 mongoose
@@ -57,6 +60,12 @@ if(process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
   });
 }
+
+// Error handling middleware
+/* app.use(function(payload: any, req: any, res: any, next: any) {
+  console.log(payload.statusCode)
+  res.status(payload.statusCode).json(payload.message);
+}); */
 
 const port = process.env.PORT || 5000; 
 

@@ -13,15 +13,18 @@ const usersService = require('../../service/users');
 // @access Public
 router.post("/register", async(req, res) => {
 
-  // Form validation
-  const { errors, isValid } = validateRegisterInput(req.body);
+   // Form validation
+   let validation = await validateRegisterInput(req.body);
 
-  // Check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+   if(validation == "ok") {
 
-  res.json(await usersService.register(req.body));
+       res.json(await(usersService.register(req.body)));
+
+   } else {
+
+       res.status(validation.statusCode).json(validation.message);
+
+   }
 
 });
 
@@ -30,16 +33,19 @@ router.post("/register", async(req, res) => {
 // @access Public
 router.post("/login", async(req, res) => {
 
-  // Form validation
-  const { errors, isValid } = validateLoginInput(req.body);
+   // Form validation
+   let validation = await validateLoginInput(req.body);
 
-  // Check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-  
-  res.json(await usersService.login(req.body));
+   if(validation == "ok") {
 
+       res.json(await(usersService.login(req.body)));
+
+   } else {
+
+       res.status(validation.statusCode).json(validation.message);
+
+   }
+   
 });
 
 // @route GET api/users/:_id

@@ -4,9 +4,6 @@ import axios from 'axios';
 // Repository
 const leaderboardRepository = require('../repository/leaderboard');
 
-// Model
-const Leaderboard = require('../models/Leaderboard');
-
 class LeaderboardClass {
 
     // Add a new leaderboard
@@ -32,16 +29,17 @@ class LeaderboardClass {
             averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100; 
             totalDistance = Math.round(totalDistance * 100) / 100; 
 
-            const newLeaderboard = new Leaderboard({
+            const newLeaderboard = {
                 userID: userID,
                 name: name,
                 competitionID: competitionID,
                 averageTime: averageTime,
                 totalDistance: totalDistance,
                 numberOfRounds: numberOfRounds   
-            });
+            }
 
-            response = await leaderboardRepository.addLeaderboard(newLeaderboard);
+            response = await leaderboardRepository.addLeaderboard(newLeaderboard.userID, newLeaderboard.name, newLeaderboard.competitionID, newLeaderboard.averageTime, newLeaderboard.totalDistance, newLeaderboard.numberOfRounds);
+
         }
         catch(err) {
             response = err;

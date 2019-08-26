@@ -12,7 +12,6 @@ export interface ILoginForm {
     password: string;
 }
 
-
 // Add competition form
 export interface IAddCompetitionForm {
     name: string;
@@ -42,4 +41,11 @@ export interface IStravaRefreshToken {
         access_token: string;
         refresh_token: string;
     }
+}
+
+// Error middleware
+export interface IError {
+    type: string;
+    message: string;
+    statusCode: number;
 }

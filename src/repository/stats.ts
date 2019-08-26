@@ -1,15 +1,15 @@
 // Model
-import Stats, { IStats } from '../models/Stats';
+import Stats from '../models/Stats';
 
 class StatsClass {
 
     // Add stats for specific segment in a competition
-    async addStats(newStats: IStats) {
+    async addStats(userID: string, name: string, competitionID: string, segmentID: string, elapsedTime: number, distance: number) {
 
         let response;
 
         try {
-            response = await newStats.save();
+            response = await Stats.create({ userID: userID, name: name, competitionID: competitionID, segmentID: segmentID, elapsedTime: elapsedTime, distance: distance });
         }
         catch(err) {
             response = err;

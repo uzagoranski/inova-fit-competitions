@@ -1,5 +1,5 @@
 // Models
-import Round, { IRound } from '../models/Round';
+import Round from '../models/Round';
 import Stats from '../models/Stats';
 
 class RoundsClass {
@@ -21,12 +21,12 @@ class RoundsClass {
     }
 
     // Add round
-    async addRound(newRound: IRound) {
+    async addRound(date: Date, competitionID: string, stravaSegmentID: string) {
 
         let response;
 
         try {
-            response = await newRound.save();
+            response = await Round.create({ date: date, competitionID: competitionID, stravaSegmentID: stravaSegmentID });
         }
         catch(err) {
             response = err;
@@ -49,7 +49,7 @@ class RoundsClass {
 
             await Promise.all([round.remove(), Stats.deleteMany({ "competitionID": competitionID, "segmentID": stravaSegmentID })]);
         
-            response = JSON.stringify({success: true});
+            response = {success: true};
         }
         catch(err) {
             response = err;
@@ -66,6 +66,22 @@ class RoundsClass {
 
         try {
             response = await Round.find().sort({ date: 1 });
+        }
+        catch(err) {
+            response = err;
+        }
+
+        return response;  
+
+    }
+
+     // Get round by segment id
+     async getRoundBySegmentId(stravaSegmentID: string) {
+
+        let response;
+
+        try {
+            response = await Round.find({ "stravaSegmentID": stravaSegmentID });
         }
         catch(err) {
             response = err;

@@ -17,36 +17,39 @@ const stravaClientId = require("../config/keys").stravaClientId;
 const stravaClientSecret = require("../config/keys").stravaClientSecret;
 // Repository
 const stravaRepository = require('../repository/strava');
-// Authorize user on Strava with incoming authorization code
-module.exports.connectStrava = function connectStrava(authorizationCode, _id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const expiration = new Date();
-        let tokens = yield axios_1.default.post('https://www.strava.com/oauth/token', {
-            client_id: stravaClientId,
-            client_secret: stravaClientSecret,
-            code: authorizationCode,
-            grant_type: "authorization_code"
+class StravaClass {
+    // Authorize user on Strava with incoming authorization code
+    connectStrava(authorizationCode, _id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const expiration = new Date();
+            let tokens = yield axios_1.default.post('https://www.strava.com/oauth/token', {
+                client_id: stravaClientId,
+                client_secret: stravaClientSecret,
+                code: authorizationCode,
+                grant_type: "authorization_code"
+            });
+            return stravaRepository.connectStrava(tokens, _id, expiration);
         });
-        return yield stravaRepository.connectStrava(tokens, _id, expiration);
-    });
-};
-// Remove Strava connection
-module.exports.disconnectStrava = function disconnectStrava(_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield stravaRepository.disconnectStrava(_id);
-    });
-};
-// Refresh Strava authentication token
-module.exports.refreshAuthenticationToken = function refreshAuthenticationToken(refresh_token, _id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const expiration = new Date();
-        let tokens = yield axios_1.default.post('https://www.strava.com/oauth/token', {
-            client_id: stravaClientId,
-            client_secret: stravaClientSecret,
-            refresh_token: refresh_token,
-            grant_type: "refresh_token"
+    }
+    // Remove Strava connection
+    disconnectStrava(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return stravaRepository.disconnectStrava(_id);
         });
-        return yield stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
-    });
-};
+    }
+    // Refresh Strava authentication token
+    refreshAuthenticationToken(refresh_token, _id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const expiration = new Date();
+            let tokens = yield axios_1.default.post('https://www.strava.com/oauth/token', {
+                client_id: stravaClientId,
+                client_secret: stravaClientSecret,
+                refresh_token: refresh_token,
+                grant_type: "refresh_token"
+            });
+            return stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
+        });
+    }
+}
+module.exports = new StravaClass();
 //# sourceMappingURL=strava.js.map

@@ -3,20 +3,46 @@ import isEmpty from "is-empty";
 
 // Interfaces
 import  { IAddCompetitionForm } from '../common/interfaces';
+import ValidationError from "../middleware/errors";
 
-module.exports = function validateAddCompetitionInput(data: IAddCompetitionForm) {
-  let errors: IAddCompetitionForm;
+// Repository
+const competitionsRepository = require('../repository/competitions');
+
+module.exports = async function validateAddCompetitionInput(data: IAddCompetitionForm) {
+
+  // Find competition by name
+  let competition = await competitionsRepository.getCompetitionByName(data.name);
 
   // Convert empty fields to an empty string so we can use validator functions
   data.name = !isEmpty(data.name) ? data.name : "";
 
   // Name checks
   if (Validator.isEmpty(data.name)) {
-    errors.name = "Name field is required";
-  } 
-  
-return {
-    errors,
-    isValid: isEmpty(errors)
-  };
+    
+    try {
+      
+      throw new ValidationError("NameEmpty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+    
+  } else if (competition) {
+
+    try {
+      
+      throw new ValidationError("NameAlreadyExists");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  }
+  else {
+    return "ok";
+  }
 };

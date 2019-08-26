@@ -20,17 +20,19 @@ router.get('/', async(req, res) => {
 // @desc    Add a new competition
 // @access  Private
 router.post('/', async(req, res) => {
-    
-    // Form validation
-    const { errors, isValid } = validateAddCompetitionInput(req.body);
-        
-    // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
 
-    res.json(await(competitionsService.addCompetition(req.body)));
-   
+    // Form validation
+    let validation = await validateAddCompetitionInput(req.body);
+
+    if(validation == "ok") {
+
+        res.json(await(competitionsService.addCompetition(req.body)));
+
+    } else {
+
+        res.status(validation.statusCode).json(validation.message);
+
+    }
 });
 
 // @route   GET api/competitions/:_id

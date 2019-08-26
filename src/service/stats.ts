@@ -6,9 +6,6 @@ const statsRepository = require('../repository/stats');
 const usersRepository = require('../repository/users');
 const roundsRepository = require('../repository/rounds');
 
-// Model
-const Stats = require('../models/Stats');
-
 class StatsClass {
 
     // Add stats for specific segment in a competition when adding a round
@@ -37,16 +34,16 @@ class StatsClass {
         
                 for(var v in stats.data) {
                     if(stats.data[v] != null && stats.data[v] != "") {
-                        const newStats = new Stats({
+                        const newStats = {
                             userID: user._id,
                             name: user.name,
                             competitionID: competitionID,
                             segmentID: segmentID,
                             elapsedTime: stats.data[v].elapsed_time,
                             distance: stats.data[v].distance         
-                        });
+                        }
         
-                        response = await statsRepository.addStats(newStats);
+                        response = await statsRepository.addStats(newStats.userID, newStats.name, newStats.competitionID, newStats.segmentID, newStats.elapsedTime, newStats.distance);
                     }
                 }  
             }
@@ -88,16 +85,16 @@ class StatsClass {
 
                 for(var v in stats.data) {
                     if(stats.data[v] != null && stats.data[v] != "") {
-                        const newStats = new Stats({
+                        const newStats = {
                             userID: user._id,
                             name: user.name,
                             competitionID: segment.competitionID,
                             segmentID: segment._id,
                             elapsedTime: stats.data[v].elapsed_time,
                             distance: stats.data[v].distance         
-                        });
+                        }
 
-                        response = await statsRepository.addStats(newStats);
+                        response = await statsRepository.addStats(newStats.userID, newStats.name, newStats.competitionID, newStats.segmentID, newStats.elapsedTime, newStats.distance);
                     }
                 }  
             }

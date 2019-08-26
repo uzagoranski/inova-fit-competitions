@@ -21,15 +21,18 @@ router.get('/:_id', async(req, res) => {
 // @access  Private
 router.post('/', async(req, res) => {
 
-    // Form validation
-    const { errors, isValid } = validateAddRoundInput(req.body);
+     // Form validation
+     let validation = await validateAddRoundInput(req.body);
 
-    // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
-
-    res.json(await roundsService.addRound(req.body));
+     if(validation == "ok") {
+ 
+         res.json(await(roundsService.addRound(req.body)));
+ 
+     } else {
+ 
+         res.status(validation.statusCode).json(validation.message);
+ 
+     }
 
 });
 

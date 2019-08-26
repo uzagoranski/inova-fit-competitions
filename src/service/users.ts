@@ -6,16 +6,9 @@ const keys = require("../config/keys");
 // Repository
 const usersRepository = require('../repository/users');
 
-// Model
-const User = require('../models/User');
-
 // Interfaces
 import  { IRegistrationForm } from '../common/interfaces';
 import  { ILoginForm } from '../common/interfaces';
-
-// Load input validation
-const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
 
 class UsersClass {
 
@@ -25,39 +18,24 @@ class UsersClass {
     let response;
 
     try {
-      // Form validation
-      const { errors, isValid } = validateRegisterInput(body);
-
-      // Check validation
-      if (!isValid) {
-        return errors;
+          
+      const newUser = {
+        name: body.name,
+        email: body.email,
+        password: body.password
       }
 
-      let user = await usersRepository.getUserByEmail(body.email);
-
-      if (user) {
-
-        return JSON.stringify({ email: "Email already exists" });
-
-      } else {
-
-        const newUser = new User({
-          name: body.name,
-          email: body.email,
-          password: body.password
+      // Hash password before saving user in database
+      bcrypt.genSalt(10, (err: string, salt: string) => {
+        bcrypt.hash(newUser.password, salt, (err: string, hash: string) => {
+          newUser.password = hash;
+          response = usersRepository.register(newUser.name, newUser.email, newUser.password);
         });
+      });
+    } catch(err) {
 
-        // Hash password before saving user in database
-        bcrypt.genSalt(10, (err: string, salt: string) => {
-          bcrypt.hash(newUser.password, salt, (err: string, hash: string) => {
-            newUser.password = hash;
-            response = usersRepository.register(newUser);
-          });
-        });
-      }
-    }
-    catch(err) {
       response = err;
+
     }
 
     return response;
@@ -69,61 +47,36 @@ class UsersClass {
     let response;
 
     try {
-        // Form validation
-        const { errors, isValid } = validateLoginInput(body);
 
-        // Check validation
-        if (!isValid) {
-            return errors;
-        }
+      // Find user by email
+      let user = await usersRepository.getUserByEmail(body.email);    
 
-        const email = body.email;
-        const password = body.password;
+      // Create JWT Payload
+      const payload = {
+          id: user.id,
+          name: user.name
+      };
 
-        // Find user by email
-        let user = await usersRepository.getUserByEmail(email);
+      // Sign token
+      const token = await jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {
+              expiresIn: 31556926 // 1 year in seconds
+          }
+      );
 
-        // Check if user exists
-        if (!user) {
-          /* throw new customerror(ErrorCodes.NotFound, "Email not found");
-
-          ErrorCodes.NotFound => 404
-          ErrorCodes.InvalidToken = 401
-
-          res.status(err.status).json({ message: err.message}) */
-            return { emailnotfound: "Email not found" };
-        }
-
-        // Check password
-        let isMatch = await bcrypt.compare(password, user.password);
-
-        if (isMatch) {
-            // Create JWT Payload
-            const payload = {
-                id: user.id,
-                name: user.name
-            };
-
-            // Sign token
-            const token = await jwt.sign(
-                payload,
-                keys.secretOrKey,
-                {
-                    expiresIn: 31556926 // 1 year in seconds
-                }
-            );
-
-            response =
-                {
-                success: true,
-                token: "Bearer " + token
-                }
-        } else {
-            return { passwordincorrect: "Password incorrect" };
-        }
+      response =
+          {
+          success: true,
+          token: "Bearer " + token
+          }
+        
     }
     catch(err) {
+
         response = err;
+        
     }
 
     return response;    

@@ -1,6 +1,6 @@
 // Models
 import Stats from '../models/Stats';
-import Leaderboard, { ILeaderboard } from '../models/Leaderboard';
+import Leaderboard from '../models/Leaderboard';
 
 class LeaderboardClass {
 
@@ -21,12 +21,12 @@ class LeaderboardClass {
     }
 
     // Adding leaderboard based on competition
-    async addLeaderboard(newLeaderboard: ILeaderboard) {
+    async addLeaderboard(userID: string, name: string, competitionID: string, averageTime: number, totalDistance: number, numberOfRounds: number) {
 
         let response;
 
         try {
-            response = await newLeaderboard.save();
+            response = await Leaderboard.create({ userID: userID, name: name, competitionID: competitionID, averageTime: averageTime, totalDistance: totalDistance, numberOfRounds: numberOfRounds });
         }
         catch(err) {
             response = err;

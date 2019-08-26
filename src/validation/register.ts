@@ -3,9 +3,15 @@ import isEmpty from "is-empty";
 
 // Interfaces
 import  { IRegistrationForm } from '../common/interfaces';
+import ValidationError from "../middleware/errors";
 
-module.exports = function validateRegisterInput(data: IRegistrationForm) {
-  let errors: IRegistrationForm;
+// Repository
+const usersRepository = require('../repository/users');
+
+module.exports = async function validateRegisterInput(data: IRegistrationForm) {
+
+  // Find user by email
+  let user = await usersRepository.getUserByEmail(data.email);
 
 // Convert empty fields to an empty string so we can use validator functions
   data.name = !isEmpty(data.name) ? data.name : "";
@@ -13,33 +19,106 @@ module.exports = function validateRegisterInput(data: IRegistrationForm) {
   data.password = !isEmpty(data.password) ? data.password : "";
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
-// Name checks
+  // Name checks
   if (Validator.isEmpty(data.name)) {
-    errors.name = "Name field is required";
+    
+    try {
+      
+      throw new ValidationError("NameEmpty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  // Email checks
+  } else if (Validator.isEmpty(data.email)) {
+      
+    try {
+      
+      throw new ValidationError("EmailEmpty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  } else if (!Validator.isEmail(data.email)) {
+      
+    try {
+      
+      throw new ValidationError("EmailInvalid");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  // Password checks
+  } else if (Validator.isEmpty(data.password)) {
+      
+    try {
+      
+      throw new ValidationError("PasswordEmpty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  } else if (Validator.isEmpty(data.password2)) {
+    
+    try {
+        
+      throw new ValidationError("Password2Empty");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  } else if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+
+    try {
+        
+      throw new ValidationError("PasswordInvalid");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+
+  } else if (!Validator.equals(data.password, data.password2)) {
+
+    try {
+        
+      throw new ValidationError("PasswordDismatch");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+    
+  } else if (user) {
+
+    try {
+        
+      throw new ValidationError("UserAlreadyExists");
+
+    } catch (err) {
+
+      return err;
+    
+    }
+  } else {
+    return "ok";
   }
 
-// Email checks
-  if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
-  } else if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
-  }
-  
-// Password checks
-  if (Validator.isEmpty(data.password)) {
-    errors.password = "Password field is required";
-  }
-if (Validator.isEmpty(data.password2)) {
-    errors.password2 = "Confirm password field is required";
-  }
-if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Password must be at least 6 characters";
-  }
-if (!Validator.equals(data.password, data.password2)) {
-    errors.password2 = "Passwords must match";
-  }
-return {
-    errors,
-    isValid: isEmpty(errors)
-  };
 };

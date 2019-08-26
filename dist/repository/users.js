@@ -13,56 +13,59 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Models
 const User_1 = __importDefault(require("../models/User"));
-// Get user by email
-module.exports.getUserByEmail = function getUserByEmail(email) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            response = yield User_1.default.findOne({ email: email });
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Add new user
-module.exports.register = function register(user) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            response = yield user.save();
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Get user by id
-module.exports.getUserByID = function getUserByID(_id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            response = yield User_1.default.findById(_id);
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
-// Get all Strava authenticated users
-module.exports.getStravaUsers = function getStravaUsers() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        try {
-            response = yield User_1.default.where("stravaUserID").ne("");
-        }
-        catch (err) {
-            response = err;
-        }
-        return response;
-    });
-};
+class UsersClass {
+    // Get user by email
+    getUserByEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield User_1.default.findOne({ email: email });
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+    // Add new user
+    register(name, email, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield User_1.default.create({ name: name, email: email, password: password });
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+    // Get user by id
+    getUserByID(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield User_1.default.findById(_id);
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+    // Get all Strava authenticated users
+    getStravaUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response;
+            try {
+                response = yield User_1.default.where("stravaUserID").ne("");
+            }
+            catch (err) {
+                response = err;
+            }
+            return response;
+        });
+    }
+}
+module.exports = new UsersClass();
 //# sourceMappingURL=users.js.map

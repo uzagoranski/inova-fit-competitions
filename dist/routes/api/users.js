@@ -23,24 +23,26 @@ const usersService = require('../../service/users');
 // @access Public
 router.post("/register", (req, res) => __awaiter(this, void 0, void 0, function* () {
     // Form validation
-    const { errors, isValid } = validateRegisterInput(req.body);
-    // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
+    let validation = yield validateRegisterInput(req.body);
+    if (validation == "ok") {
+        res.json(yield (usersService.register(req.body)));
     }
-    res.json(yield usersService.register(req.body));
+    else {
+        res.status(validation.statusCode).json(validation.message);
+    }
 }));
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => __awaiter(this, void 0, void 0, function* () {
     // Form validation
-    const { errors, isValid } = validateLoginInput(req.body);
-    // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
+    let validation = yield validateLoginInput(req.body);
+    if (validation == "ok") {
+        res.json(yield (usersService.login(req.body)));
     }
-    res.json(yield usersService.login(req.body));
+    else {
+        res.status(validation.statusCode).json(validation.message);
+    }
 }));
 // @route GET api/users/:_id
 // @desc Get selected user

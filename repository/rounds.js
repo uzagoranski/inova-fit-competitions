@@ -47,7 +47,7 @@ module.exports.deleteRound = async function deleteRound(_id) {
 
         await Promise.all([round.remove(), Stats.deleteMany({ "competitionID": competitionID, "segmentID": stravaSegmentID })]);
      
-        response = JSON.stringify({success: true});
+        response = {success: true};
     }
     catch(err) {
         response = err;

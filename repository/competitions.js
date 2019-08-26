@@ -61,6 +61,6 @@ module.exports.deleteCompetition = async function deleteCompetition(_id) {
         return err;
     }
 
-    return JSON.stringify({ success: true });
+    return { success: true };
     
 }
