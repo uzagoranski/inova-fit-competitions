@@ -11,7 +11,7 @@ const roundRepository = require('../repository/rounds');
 module.exports = async function validateAddRoundInput(data: IAddRoundForm) {
 
   // Find competition by name
-  let round = await roundRepository.getRoundBySegmentId(data.stravaSegmentId);
+  let round = await roundRepository.getRoundBySegmentId(data.competitionId, data.stravaSegmentId);
 
   // Convert empty fields to an empty string so we can use validator functions
   data.date = !isEmpty(data.date) ? data.date : "";
@@ -43,7 +43,7 @@ module.exports = async function validateAddRoundInput(data: IAddRoundForm) {
     
     }
     
-  } else if(round) {
+  } else if (round[0]) {
        
     try {
       

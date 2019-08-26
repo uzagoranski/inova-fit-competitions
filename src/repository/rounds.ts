@@ -76,12 +76,12 @@ class RoundsClass {
     }
 
      // Get round by segment id
-     async getRoundBySegmentId(stravaSegmentID: string) {
+     async getRoundBySegmentId(competitionID: string, stravaSegmentID: string) {
 
         let response;
 
         try {
-            response = await Round.find({ "stravaSegmentID": stravaSegmentID });
+            response = await Round.find({ "competitionID": competitionID, "stravaSegmentID": stravaSegmentID });
         }
         catch(err) {
             response = err;

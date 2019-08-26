@@ -72,11 +72,11 @@ class RoundsClass {
         });
     }
     // Get round by segment id
-    getRoundBySegmentId(stravaSegmentID) {
+    getRoundBySegmentId(competitionID, stravaSegmentID) {
         return __awaiter(this, void 0, void 0, function* () {
             let response;
             try {
-                response = yield Round_1.default.find({ "stravaSegmentID": stravaSegmentID });
+                response = yield Round_1.default.find({ "competitionID": competitionID, "stravaSegmentID": stravaSegmentID });
             }
             catch (err) {
                 response = err;

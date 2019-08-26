@@ -19,7 +19,7 @@ const roundRepository = require('../repository/rounds');
 module.exports = function validateAddRoundInput(data) {
     return __awaiter(this, void 0, void 0, function* () {
         // Find competition by name
-        let round = yield roundRepository.getRoundBySegmentId(data.stravaSegmentId);
+        let round = yield roundRepository.getRoundBySegmentId(data.competitionId, data.stravaSegmentId);
         // Convert empty fields to an empty string so we can use validator functions
         data.date = !is_empty_1.default(data.date) ? data.date : "";
         data.stravaSegmentId = !is_empty_1.default(data.stravaSegmentId) ? data.stravaSegmentId : "";
@@ -41,7 +41,7 @@ module.exports = function validateAddRoundInput(data) {
                 return err;
             }
         }
-        else if (round) {
+        else if (round[0]) {
             try {
                 throw new errors_1.default("StravaSegmentIdAlreadyExists");
             }

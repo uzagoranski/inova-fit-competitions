@@ -45,10 +45,10 @@ class RoundsClass {
             return roundsRepository.deleteRound(_id);
         });
     }
-    // Get round by segment id
-    getRoundBySegmentId(stravaSegmentID) {
+    // Get round by Strava segment id
+    getRoundBySegmentId(competitionID, stravaSegmentID) {
         return __awaiter(this, void 0, void 0, function* () {
-            return roundsRepository.getRoundBySegmentId(stravaSegmentID);
+            return roundsRepository.getRoundBySegmentId(competitionID, stravaSegmentID);
         });
     }
 }
