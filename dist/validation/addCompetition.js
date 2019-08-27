@@ -31,7 +31,7 @@ module.exports = function validateAddCompetitionInput(data) {
                 return err;
             }
         }
-        else if (competition) {
+        else if (competition[0]) {
             try {
                 throw new errors_1.default("NameAlreadyExists");
             }

@@ -29,7 +29,7 @@ module.exports = async function validateAddCompetitionInput(data: IAddCompetitio
     
     }
     
-  } else if (competition) {
+  } else if (competition[0]) {
 
     try {
       
