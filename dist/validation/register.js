@@ -83,6 +83,7 @@ module.exports = function validateRegisterInput(data) {
             catch (err) {
                 return err;
             }
+            // User checks
         }
         else if (user) {
             try {

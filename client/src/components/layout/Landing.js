@@ -87,7 +87,7 @@ class Landing extends Component {
             : 
             <Fragment>
               <h4>
-                <b>Hey there,</b> {user.name.split(" ")[0]}
+                Hey there, <b>{user.name.split(" ")[0]}</b>
                 <p className="flow-text grey-text text-darken-1">
                   You are logged into Inova IT competition platform.
                   Feel free to manage <a href="/competitions">competitions</a>, rounds and search through leaderboards.

@@ -13,7 +13,7 @@ module.exports = async function validateRegisterInput(data: IRegistrationForm) {
   // Find user by email
   let user = await usersRepository.getUserByEmail(data.email);
 
-// Convert empty fields to an empty string so we can use validator functions
+  // Convert empty fields to an empty string so we can use validator functions
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
@@ -106,6 +106,7 @@ module.exports = async function validateRegisterInput(data: IRegistrationForm) {
     
     }
     
+  // User checks
   } else if (user) {
 
     try {
@@ -117,8 +118,11 @@ module.exports = async function validateRegisterInput(data: IRegistrationForm) {
       return err;
     
     }
+
   } else {
+
     return "ok";
+
   }
 
-};
+}

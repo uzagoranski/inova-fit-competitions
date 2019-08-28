@@ -29,6 +29,7 @@ module.exports = async function validateAddCompetitionInput(data: IAddCompetitio
     
     }
     
+  // Competition checks
   } else if (competition[0]) {
 
     try {
@@ -43,6 +44,9 @@ module.exports = async function validateAddCompetitionInput(data: IAddCompetitio
 
   }
   else {
+
     return "ok";
+    
   }
-};
+
+}

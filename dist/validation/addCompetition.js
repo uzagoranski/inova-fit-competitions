@@ -30,6 +30,7 @@ module.exports = function validateAddCompetitionInput(data) {
             catch (err) {
                 return err;
             }
+            // Competition checks
         }
         else if (competition[0]) {
             try {

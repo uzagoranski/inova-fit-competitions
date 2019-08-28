@@ -43,6 +43,7 @@ module.exports = async function validateAddRoundInput(data: IAddRoundForm) {
     
     }
     
+  // Round checks
   } else if (round[0]) {
        
     try {
@@ -60,5 +61,5 @@ module.exports = async function validateAddRoundInput(data: IAddRoundForm) {
     return "ok";
 
   }
- 
-};
+  
+}

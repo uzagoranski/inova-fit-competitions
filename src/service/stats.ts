@@ -76,7 +76,7 @@ class StatsClass {
 
                 }
 
-                let stats = await axios.get(`https://www.strava.com/api/v3/segments/${segment._id}/all_efforts?per_page=30`,
+                let stats = await axios.get(`https://www.strava.com/api/v3/segments/${segment.stravaSegmentID}/all_efforts?per_page=30`,
                     {
                         headers: {
                             "Authorization": `Bearer ${user.stravaAccessToken}`

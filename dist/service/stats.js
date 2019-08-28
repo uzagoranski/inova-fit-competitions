@@ -67,7 +67,7 @@ class StatsClass {
                     if (user.accessTokenExpirationDate <= new Date()) {
                         yield axios_1.default.put(`http://localhost:5000/api/strava/refreshToken/${user._id}/${user.stravaRefreshToken}`);
                     }
-                    let stats = yield axios_1.default.get(`https://www.strava.com/api/v3/segments/${segment._id}/all_efforts?per_page=30`, {
+                    let stats = yield axios_1.default.get(`https://www.strava.com/api/v3/segments/${segment.stravaSegmentID}/all_efforts?per_page=30`, {
                         headers: {
                             "Authorization": `Bearer ${user.stravaAccessToken}`
                         }

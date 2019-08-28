@@ -40,6 +40,7 @@ module.exports = function validateAddRoundInput(data) {
             catch (err) {
                 return err;
             }
+            // Round checks
         }
         else if (round[0]) {
             try {

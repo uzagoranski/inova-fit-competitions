@@ -12,8 +12,8 @@ const usersRepository = require('../repository/users');
 module.exports = async function validateLoginInput(data: ILoginForm) {
 
   // Find user by email
-  let user = await usersRepository.getUserByEmail(data.email);
-
+  let user = await usersRepository.getUserByEmail(data.email);  
+  
   // Convert empty fields to an empty string so we can use validator functions
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
@@ -80,8 +80,10 @@ module.exports = async function validateLoginInput(data: ILoginForm) {
     
     }
 
-  }
-  else {
+  }  else {
+
     return "ok";
+
   }
-};
+  
+}
