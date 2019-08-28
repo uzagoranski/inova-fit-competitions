@@ -28,6 +28,8 @@ To get app running locally:
 * Open Visual Studio Code and integrated terminal
 * Run script ```npm install``` to install dependencies
 * Enter script ```cd client```
+* Run script ```npm install``` to install dependencies
+* Enter script ```cd ..```
 * Run script ```npm run dev``` to start the local server (backend running on port 5000 & frontend on 3000)
 
 ### Requests to the backend API
