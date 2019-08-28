@@ -14,7 +14,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Models
 const User_1 = __importDefault(require("../models/User"));
 const Stats_1 = __importDefault(require("../models/Stats"));
-const Leaderboard_1 = __importDefault(require("../models/Leaderboard"));
 class StravaClass {
     // Authorize user with incoming authorization code
     connectStrava(res, _id, expiration) {
@@ -34,7 +33,7 @@ class StravaClass {
         return __awaiter(this, void 0, void 0, function* () {
             let response;
             try {
-                yield Promise.all([User_1.default.findByIdAndUpdate(_id, { "stravaUserID": "", "stravaAccessToken": "", "stravaRefreshToken": "", "accessTokenExpirationDate": "" }), Stats_1.default.deleteMany({ "userID": _id }), Leaderboard_1.default.deleteMany({ "userID": _id })]);
+                yield Promise.all([User_1.default.findByIdAndUpdate(_id, { "stravaUserID": "", "stravaAccessToken": "", "stravaRefreshToken": "", "accessTokenExpirationDate": "" }), Stats_1.default.deleteMany({ "userID": _id })]);
                 response = { success: true };
             }
             catch (err) {

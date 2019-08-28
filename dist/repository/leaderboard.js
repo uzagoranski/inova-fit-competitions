@@ -13,40 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Models
 const Stats_1 = __importDefault(require("../models/Stats"));
-const Leaderboard_1 = __importDefault(require("../models/Leaderboard"));
 class LeaderboardClass {
-    // Getting stats for different users in selected competition
-    getRelevantStats(competitionID, userID) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response;
-            try {
-                response = yield Stats_1.default.find({ "competitionID": competitionID, "userID": userID });
-            }
-            catch (err) {
-                response = err;
-            }
-            return response;
-        });
-    }
-    // Adding leaderboard based on competition
-    addLeaderboard(userID, name, competitionID, averageTime, totalDistance, numberOfRounds) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response;
-            try {
-                response = yield Leaderboard_1.default.create({ userID: userID, name: name, competitionID: competitionID, averageTime: averageTime, totalDistance: totalDistance, numberOfRounds: numberOfRounds });
-            }
-            catch (err) {
-                response = err;
-            }
-            return response;
-        });
-    }
     // Collecting distinct userIDs from stats to send them in getLeaderboard method
     getDistinctUserIDs(competitionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let response;
             try {
-                yield Leaderboard_1.default.deleteMany({ "competitionID": competitionID });
                 response = yield Stats_1.default.find({ "competitionID": competitionID }).distinct("userID");
             }
             catch (err) {
@@ -56,11 +28,11 @@ class LeaderboardClass {
         });
     }
     // Get a generated leaderboard for selected competition
-    getLeaderboard(competitionID) {
+    getAllStatsForCompetition(competitionID) {
         return __awaiter(this, void 0, void 0, function* () {
             let response;
             try {
-                response = yield Leaderboard_1.default.find({ "competitionID": competitionID });
+                response = yield Stats_1.default.find({ "competitionID": competitionID });
             }
             catch (err) {
                 response = err;

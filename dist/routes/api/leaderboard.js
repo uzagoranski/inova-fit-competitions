@@ -15,17 +15,11 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 // Service
 const leaderboardService = require('../../service/leaderboard');
-// @route GET api/leaderboard/:competitionID/:userID
-// @desc Get all stats from Leaderboard for selected competition
-// @access Private
-router.get("/:competitionID/:userID", (req, res) => __awaiter(this, void 0, void 0, function* () {
-    res.json(yield leaderboardService.addLeaderboard(req.params.competitionID, req.params.userID));
-}));
 // @route GET api/leaderboard/:competitionID
 // @desc Reload leaderboard for selected competition
 // @access Private
 router.get("/:competitionID", (req, res) => __awaiter(this, void 0, void 0, function* () {
-    res.json(yield leaderboardService.reloadLeaderboard(req.params.competitionID));
+    res.json(yield leaderboardService.getLeaderboard(req.params.competitionID));
 }));
 module.exports = router;
 //# sourceMappingURL=leaderboard.js.map

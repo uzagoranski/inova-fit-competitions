@@ -1,67 +1,52 @@
-// Dependencies
-import axios from 'axios';
-
 // Repository
 const leaderboardRepository = require('../repository/leaderboard');
 
 class LeaderboardClass {
 
-    // Add a new leaderboard
-    async addLeaderboard(competitionID: string, userID: string) {
-
-        let response;
-
-        try {
-            let data = await leaderboardRepository.getRelevantStats(competitionID, userID);
-        
-            let name = "";
-            let totalTime = 0;
-            let averageTime = 0;
-            let totalDistance = 0;
-            let numberOfRounds = 0;
-
-            for(var i in data) {
-                numberOfRounds++;
-                totalTime += data[i].elapsedTime;
-                totalDistance += data[i].distance;
-                name = data[i].name;
-            }
-            averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100; 
-            totalDistance = Math.round(totalDistance * 100) / 100; 
-
-            const newLeaderboard = {
-                userID: userID,
-                name: name,
-                competitionID: competitionID,
-                averageTime: averageTime,
-                totalDistance: totalDistance,
-                numberOfRounds: numberOfRounds   
-            }
-
-            response = await leaderboardRepository.addLeaderboard(newLeaderboard.userID, newLeaderboard.name, newLeaderboard.competitionID, newLeaderboard.averageTime, newLeaderboard.totalDistance, newLeaderboard.numberOfRounds);
-
-        }
-        catch(err) {
-            response = err;
-        }
-        
-        return response;    
-
-    }
-
     // Reload leaderboard for selected competition
-    async reloadLeaderboard(competitionID: string) {
+    async getLeaderboard(competitionID: string) {
 
         let response;
         
         try {
+            let stats = await leaderboardRepository.getAllStatsForCompetition(competitionID);
+
             let userIDs = await leaderboardRepository.getDistinctUserIDs(competitionID);
 
+            let responseValue = [];
+
             for(let i in userIDs) {
-                await axios.get(`http://localhost:5000/api/leaderboard/${competitionID}/${userIDs[i]}`);
+
+                let name = "";
+                let totalTime = 0;
+                let averageTime = 0;
+                let totalDistance = 0;
+                let numberOfRounds = 0;
+
+                for(let j in stats) {                
+                    if(stats[j].userID == userIDs[i]) {
+                        numberOfRounds++;
+                        totalTime += stats[j].elapsedTime;
+                        totalDistance += stats[j].distance;
+                        name = stats[j].name;
+                    }          
+                }
+                averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100; 
+                totalDistance = Math.round(totalDistance * 100) / 100; 
+
+                responseValue.push(
+                    {
+                        userID: userIDs[i],
+                        name: name,
+                        competitionID: competitionID,
+                        averageTime: averageTime,
+                        totalDistance: totalDistance,
+                        numberOfRounds: numberOfRounds
+                    }
+                );
             }
         
-            response = await leaderboardRepository.getLeaderboard(competitionID);     
+            response = responseValue;     
             
         }
         catch(err) {

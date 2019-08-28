@@ -1,7 +1,6 @@
 // Models
 import User from '../models/User';
 import Stats from '../models/Stats';
-import Leaderboard from '../models/Leaderboard';
 import { IStravaRefreshToken, IStravaAuthenticate } from '../common/interfaces';
 
 class StravaClass {
@@ -28,7 +27,7 @@ class StravaClass {
         let response;
 
         try {
-            await Promise.all([User.findByIdAndUpdate(_id, { "stravaUserID": "", "stravaAccessToken": "", "stravaRefreshToken": "", "accessTokenExpirationDate": "" }), Stats.deleteMany({ "userID": _id }), Leaderboard.deleteMany({ "userID": _id })]);
+            await Promise.all([User.findByIdAndUpdate(_id, { "stravaUserID": "", "stravaAccessToken": "", "stravaRefreshToken": "", "accessTokenExpirationDate": "" }), Stats.deleteMany({ "userID": _id })]);
 
             response = { success: true };          
         }
