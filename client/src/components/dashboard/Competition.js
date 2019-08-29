@@ -36,7 +36,7 @@ class Competition extends Component {
         const { leaderboards } = this.props.leaderboard;
         let position = 0;
         return(
-            <Media query="(min-width: 692px)">
+            <Media query="(min-width: 750px)">
                 {matches =>
                         matches ? 
                         (
@@ -113,8 +113,8 @@ class Competition extends Component {
                                         </thead>
                                         <tbody>
                                         { !(leaderboards === null && leaderboards === "") ?                           
-                                        leaderboards.map(({ _id, name, averageTime, totalDistance, numberOfRounds }) => (
-                                            <tr key={_id}>   
+                                        leaderboards.map(({ name, averageTime, totalDistance, numberOfRounds }) => (
+                                            <tr key={name}>   
                                                 <td style={{color: "red", fontWeight:"bold", paddingRight:"10px", paddingLeft:"10px"}}>
                                                     {++position}
                                                 </td>                                 
@@ -183,7 +183,7 @@ class Competition extends Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                { rounds.map(({ _id, date, stravaSegmentId }) => (
+                                                { rounds.map(({ _id, date, stravaSegmentID }) => (
                                                     <tr key={_id}>
                                                         <th scope="row"><Button
                                                                 className="btn btn-small waves-effect waves-light hoverable red accent-3"                                            
@@ -199,7 +199,7 @@ class Competition extends Component {
                                                             { date.substr(11, 5) }
                                                         </td>
                                                         <td>
-                                                            {stravaSegmentId}
+                                                            {stravaSegmentID}
                                                         </td>
                                                     </tr>   
                                                 ))}                 
@@ -219,8 +219,8 @@ class Competition extends Component {
                                                 </thead>
                                                 <tbody>
                                             { !(leaderboards === null && leaderboards === "") ?                                                                          
-                                                leaderboards.map(({ _id, name, averageTime, totalDistance, numberOfRounds }) => (
-                                                    <tr key={_id}>   
+                                                leaderboards.map(({ name, averageTime, totalDistance, numberOfRounds }) => (
+                                                    <tr key={name}>   
                                                         <td style={{color: "red", fontWeight:"bold", paddingRight:"10px", paddingLeft:"10px"}}>
                                                             {++position}
                                                         </td>                                 
