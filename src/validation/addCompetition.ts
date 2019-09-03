@@ -10,43 +10,42 @@ const competitionsRepository = require('../repository/competitions');
 
 module.exports = async function validateAddCompetitionInput(data: IAddCompetitionForm) {
 
-  // Find competition by name
-  let competition = await competitionsRepository.getCompetitionByName(data.name);
+    // Find competition by name
+    let competition = await competitionsRepository.getCompetitionByName(data.name);
 
-  // Convert empty fields to an empty string so we can use validator functions
-  data.name = !isEmpty(data.name) ? data.name : "";
+    // Convert empty fields to an empty string so we can use validator functions
+    data.name = !isEmpty(data.name) ? data.name : "";
 
-  // Name checks
-  if (Validator.isEmpty(data.name)) {
-    
-    try {
-      
-      throw new ValidationError("NameEmpty");
+    // Name checks
+    if (Validator.isEmpty(data.name)) {
+        
+        try {
+        
+            throw new ValidationError("NameEmpty");
 
-    } catch (err) {
+        } catch (err) {
 
-      return err;
-    
+            return err;
+        
+        }
+        
+    // Competition checks
+    } else if (competition[0]) {
+
+        try {
+        
+            throw new ValidationError("NameAlreadyExists");
+
+        } catch (err) {
+
+            return err;
+        
+        }
+
     }
-    
-  // Competition checks
-  } else if (competition[0]) {
+    else {
 
-    try {
-      
-      throw new ValidationError("NameAlreadyExists");
-
-    } catch (err) {
-
-      return err;
-    
+        return "ok";
+        
     }
-
-  }
-  else {
-
-    return "ok";
-    
-  }
-
 }

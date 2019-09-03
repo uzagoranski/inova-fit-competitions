@@ -1,5 +1,5 @@
 import { SET_CURRENT_USER, USER_LOADING } from "../actions/types";
-import { IReducerAction } from "../../common/interfaces";
+import { IReducerAction } from "../common/interfaces";
 const isEmpty = require("is-empty");
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
   loading: false
 };
 
-export default function(state = initialState, action: IReducerAction) {
+export default function(state = initialState, action: any) {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {

@@ -1,12 +1,12 @@
 import { GET_ROUNDS, ADD_ROUND, DELETE_ROUND, ROUNDS_LOADING } from '../actions/types';
-import { IReducerAction } from '../../common/interfaces';
+import { IReducerAction } from '../common/interfaces';
 
-const initialState = {
+const initialState: any = {
     rounds: [],
     loading: false
 }
 
-export default function(state = initialState, action: IReducerAction) {
+export default function(state = initialState, action: any) {
     switch(action.type) {
         case GET_ROUNDS:
             return {
@@ -17,7 +17,7 @@ export default function(state = initialState, action: IReducerAction) {
         case DELETE_ROUND:
             return {
                 ...state,
-                rounds: state.rounds.filter(round => round._id !== action.payload)
+                rounds: state.rounds.filter((round: any) => round._id !== action.payload)
             }
         case ADD_ROUND:
             return {

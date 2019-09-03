@@ -3,26 +3,36 @@ import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { Button } from 'reactstrap';
 import { getCompetitions, deleteCompetition } from '../../actions/competitionActions';
-const trophy = require("../../static/img/trophy.jpg");
+import { AppState } from "../../reducers";
+import trophy from "../../assets/img/trophy.jpg";
 
-interface Props {
-    getCompetitions(): any;
-    competition: object;
-    deleteCompetition(id: string): any;
+// Props
+interface ICompetitionsListProps {
+
+    competition: any,
+    getCompetitions: () => any,
+    deleteCompetition: (id: string) => any
+
 }
 
-class CompetitionsList extends Component<Props> {
+class CompetitionsList extends Component<ICompetitionsListProps> {
 
     componentDidMount() {
+
         this.props.getCompetitions();
+
     }
 
     onDeleteClick = (_id: string) => {
+
         this.props.deleteCompetition(_id);
+
     }
 
     render() {
+
         const { competitions } = this.props.competition;
+
         return(
             <div style={{ minHeight: "70vh", marginTop: "130px" }} className="container valign-wrapper">
                 <div className="row">
@@ -67,7 +77,7 @@ class CompetitionsList extends Component<Props> {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {competitions.map(({ _id, name }) => (
+                                {competitions.map(({ _id, name }: any) => (
                                     <tr key={_id}>
                                         <th scope="row"><Button
                                                 className="btn btn-small waves-effect waves-light hoverable red accent-3"                                            
@@ -87,12 +97,12 @@ class CompetitionsList extends Component<Props> {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
     competition: state.competition
-});
+})
 
 export default connect(mapStateToProps, { getCompetitions, deleteCompetition })(CompetitionsList);

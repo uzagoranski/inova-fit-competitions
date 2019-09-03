@@ -1,12 +1,12 @@
 import { GET_LEADERBOARD, LEADERBOARD_LOADING } from '../actions/types';
-import { IReducerAction } from '../../common/interfaces';
+import { IReducerAction } from '../common/interfaces';
 
-const initialState = {
+const initialState: any = {
     leaderboards: [],
     loading: false
 }
 
-export default function(state = initialState, action: IReducerAction) {
+export default function(state = initialState, action: any) {
     switch(action.type) {
         case GET_LEADERBOARD:
             return {

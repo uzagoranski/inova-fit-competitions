@@ -48,8 +48,8 @@ class RoundsClass {
 
     }
 
-     // Get round by Strava segment id
-     async getRoundBySegmentId(competitionID: string, stravaSegmentID: string) {
+    // Get round by Strava segment id
+    async getRoundBySegmentId(competitionID: string, stravaSegmentID: string) {
 
         return roundsRepository.getRoundBySegmentId(competitionID, stravaSegmentID);
 

@@ -1,12 +1,12 @@
 import { GET_COMPETITIONS, GET_COMPETITION, ADD_COMPETITION, DELETE_COMPETITION, COMPETITIONS_LOADING } from '../actions/types';
-import { IReducerAction } from "../../common/interfaces";
+import { IReducerAction } from "../common/interfaces";
 
-const initialState = {
+const initialState: any = {
     competitions: [],
     loading: false
 }
 
-export default function(state = initialState, action: IReducerAction) {
+export default function(state = initialState, action: any) {
     switch(action.type) {
         case GET_COMPETITIONS:
             return {
@@ -23,7 +23,7 @@ export default function(state = initialState, action: IReducerAction) {
         case DELETE_COMPETITION:
             return {
                 ...state,
-                competitions: state.competitions.filter(competition => competition._id !== action.payload)
+                competitions: state.competitions.filter((competition: any) => competition._id !== action.payload)
             }
         case ADD_COMPETITION:
             return {

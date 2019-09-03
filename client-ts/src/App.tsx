@@ -19,7 +19,7 @@ import AddRound from "./components/dashboard/AddRound";
 import Account from "./components/dashboard/Account";
 import ExchangeToken from "./components/auth/ExchangeToken";
 import DisconnectStrava from "./components/auth/DisconnectStrava";
-import { ITokenDecoded } from "../common/interfaces";
+import { ITokenDecoded } from "./common/interfaces";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -29,7 +29,7 @@ if (localStorage.jwtToken) {
     setAuthToken(token);
 
     // Decode token and get user info and exp
-    const decoded: ITokenDecoded = jwt_decode(token);
+    const decoded: any = jwt_decode(token);
 
     // Set user and isAuthenticated
     store.dispatch(setCurrentUser(decoded));
@@ -47,31 +47,31 @@ if (localStorage.jwtToken) {
     }
 }
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Navigation />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Switch>
-              <PrivateRoute exact path="/competitions" component={CompetitionsList} />
-              <PrivateRoute exact path="/competition/:_id" component={Competition} />
-              <PrivateRoute exact path="/addCompetition" component={AddCompetition} />
-              <PrivateRoute exact path="/addRound/:_id" component={AddRound} />
-              <PrivateRoute exact path="/account/:_id" component={Account} />
-              <PrivateRoute exact path="/exchange_token" component={ExchangeToken} />
-              <PrivateRoute exact path="/disconnectStrava" component={DisconnectStrava} />
-            </Switch>
-            <Footer />
-          </div>
-        </Router>
-      </Provider>
-    );
-  }
+class App extends Component<any, any> {
+    render() {
+        return (
+            <Provider store={store}>
+                <Router>
+                    <div className="App">
+                        <Navigation />
+                        <Route exact path="/" component={Landing} />
+                        <Route exact path="/register" component={Register} />
+                        <Route exact path="/login" component={Login} />
+                        <Switch>
+                        <PrivateRoute exact path="/competitions" component={CompetitionsList} />
+                        <PrivateRoute exact path="/competition/:_id" component={Competition} />
+                        <PrivateRoute exact path="/addCompetition" component={AddCompetition} />
+                        <PrivateRoute exact path="/addRound/:_id" component={AddRound} />
+                        <PrivateRoute exact path="/account/:_id" component={Account} />
+                        <PrivateRoute exact path="/exchange_token" component={ExchangeToken} />
+                        <PrivateRoute exact path="/disconnectStrava" component={DisconnectStrava} />
+                        </Switch>
+                        <Footer />
+                    </div>
+                </Router>
+            </Provider>
+        );
+    }
 }
 
 export default App;

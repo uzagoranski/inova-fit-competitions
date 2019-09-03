@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
@@ -33,10 +32,10 @@ class Footer extends Component {
                                 { this.props.auth.isAuthenticated ?    
                                 <Fragment>
                                     <li>
-                                        <Link to="/competitions">Competitions </Link>
+                                        <a href="/competitions">Competitions </a>
                                     </li>
                                     <li>
-                                        <Link to={"/account/" + this.props.auth.user.id}>Account</Link>
+                                        <a href={"/account/" + this.props.auth.user.id}>Account</a>
                                     </li>
                                     <li>
                                     <button
@@ -58,10 +57,10 @@ class Footer extends Component {
                                 :
                                 <Fragment>
                                     <li>
-                                        <Link to="/login">Login</Link>
+                                        <a href="/login">Login</a>
                                     </li>                                    
                                     <li>
-                                        <Link to="/register">Register</Link>
+                                        <a href="/register">Register</a>
                                     </li>
                                 </Fragment>                                
                                 }                               

@@ -9,14 +9,14 @@ export const getCompetitions = () => async(dispatch) => {
 
         let res = await axios.get('/api/competitions');
 
-        dispatch({
+        await dispatch({
             type: GET_COMPETITIONS,
             payload: res.data
         });
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });
@@ -31,14 +31,14 @@ export const getCompetition = (_id) => async(dispatch) => {
 
         let res = await axios.get(`/api/competitions/${_id}`);
 
-        dispatch({
+        await dispatch({
             type: GET_COMPETITION,
             payload: res.data
         });        
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });
@@ -51,7 +51,7 @@ export const addCompetition = (competition, history) => async(dispatch) => {
 
         let res = await axios.post('/api/competitions', competition);
         
-        dispatch({
+        await dispatch({
             type: ADD_COMPETITION,
             payload: res.data           
         });
@@ -60,7 +60,7 @@ export const addCompetition = (competition, history) => async(dispatch) => {
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });
@@ -73,14 +73,14 @@ export const deleteCompetition = (_id) => async(dispatch) => {
 
         await axios.delete(`/api/competitions/${_id}`);
 
-        dispatch({
+        await dispatch({
             type: DELETE_COMPETITION,
             payload: _id
         });
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });

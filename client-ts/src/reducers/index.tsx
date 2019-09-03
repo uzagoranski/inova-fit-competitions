@@ -7,7 +7,7 @@ import accountReducer from "./accountReducer";
 import stravaReducer from "./stravaReducer";
 import leaderboardReducer from "./leaderboardReducer";
 
-export default combineReducers({
+const rootReducer = combineReducers({
     auth: authReducer,
     errors: errorReducer,
     competition: competitionReducer,
@@ -16,3 +16,7 @@ export default combineReducers({
     strava: stravaReducer,
     leaderboard: leaderboardReducer
 });
+
+export default rootReducer;
+
+export type AppState = ReturnType<typeof rootReducer>

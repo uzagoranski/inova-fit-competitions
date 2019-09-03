@@ -13,6 +13,8 @@ export const registerUser = (userData, history) => async(dispatch) => {
 
     } catch (err) {
 
+        console.log(err)
+
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
@@ -39,11 +41,11 @@ export const loginUser = userData => async(dispatch) => {
         const decoded = jwt_decode(token);
 
         // Set current user
-        dispatch(setCurrentUser(decoded));
+        await dispatch(setCurrentUser(decoded));
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });

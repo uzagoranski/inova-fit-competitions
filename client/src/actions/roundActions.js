@@ -9,14 +9,14 @@ export const getRounds = (_id) => async(dispatch) => {
 
         let res = await axios.get(`/api/rounds/${_id}`);
 
-        dispatch({
+        await dispatch({
             type: GET_ROUNDS,
             payload: res.data
         });
         
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });
@@ -29,7 +29,7 @@ export const addRound = (round, history, _id) => async(dispatch) => {
 
         let res = await axios.post('/api/rounds', round);
 
-        dispatch({
+        await dispatch({
             type: ADD_ROUND,
             payload: res.data
         });
@@ -38,7 +38,7 @@ export const addRound = (round, history, _id) => async(dispatch) => {
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
           });
@@ -51,14 +51,14 @@ export const deleteRound = (_id) => async(dispatch) => {
 
         await axios.delete(`/api/rounds/${_id}`);
 
-        dispatch({
+        await dispatch({
             type: DELETE_ROUND,
             payload: _id
         });
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });

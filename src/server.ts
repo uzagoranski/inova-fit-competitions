@@ -15,9 +15,9 @@ const leaderboard = require("./routes/api/leaderboard");
 
 // Bodyparser middleware
 app.use(
-  bodyParser.urlencoded({
-    extended: false
-  })
+    bodyParser.urlencoded({
+        extended: false
+    })
 );
 
 app.use(bodyParser.json());
@@ -28,12 +28,12 @@ const db = keys.mongoURI;
 
 // Connect to MongoDB
 mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("MongoDB successfully connected"))
-  .catch((err: string) => console.log(err));
+    .connect(
+        db,
+        { useNewUrlParser: true }
+    )
+    .then(() => console.log("MongoDB successfully connected"))
+    .catch((err: string) => console.log(err));
 
 mongoose.set('useFindAndModify', false);
 
@@ -53,12 +53,12 @@ app.use("/api/leaderboard", leaderboard);
 
 // Serve static assets if in production
 if(process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('client/build'));
+    // Set static folder
+    app.use(express.static('client/build'));
 
-  app.get('*', (req: any, res: any) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-  });
+    app.get('*', (req: any, res: any) => {
+        res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    });
 }
 
 // Error handling middleware

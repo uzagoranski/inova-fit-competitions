@@ -67,8 +67,8 @@ class CompetitionsClass {
         
     }
 
-      // Get competition by name
-      async getCompetitionByName(name: string) {
+    // Get competition by name
+    async getCompetitionByName(name: string) {
         
         let response;
 

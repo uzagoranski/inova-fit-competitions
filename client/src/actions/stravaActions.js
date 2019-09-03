@@ -31,14 +31,14 @@ export const disconnectStrava = (_id) => async(dispatch) => {
         
         let res = await axios.put(`/api/strava/${_id}`);
 
-        dispatch({
+        await dispatch({
             type: DISCONNECT_STRAVA,
             payload: res.data
         });
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });
@@ -53,14 +53,14 @@ export const refreshToken = (_id, refresh_token) => async(dispatch) => {
 
         let res = await axios.put(`/api/strava/refresh/${_id}/${refresh_token}`);
 
-        dispatch({
+        await dispatch({
             type: REFRESH_TOKEN,
             payload: res.data
         });
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });

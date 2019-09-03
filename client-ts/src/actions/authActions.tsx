@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 import { Dispatch } from "redux";
 import { ILoginForm, IRegistrationForm } from "../../../src/common/interfaces";
-import { ITokenDecoded } from "../../common/interfaces";
+import { ITokenDecoded } from "../common/interfaces";
 import { History } from "history";
 
 // Register User
@@ -55,7 +55,7 @@ export const loginUser = (userData: ILoginForm) => async(dispatch: Dispatch) => 
 }
 
 // Set logged in user
-export const setCurrentUser = (decoded: ITokenDecoded) => {
+export const setCurrentUser = (decoded: (ITokenDecoded | {})) => {
 
     return {
         type: SET_CURRENT_USER,
@@ -72,14 +72,14 @@ export const setUserLoading = () => {
 }
 
 // Log user out
-export const logoutUser = () => (dispatch: Dispatch) => {
+export const logoutUser = () : any => (dispatch: Dispatch) => {
 
     // Remove token from local storage
     localStorage.removeItem("jwtToken");
 
     // Remove auth header for future requests
-    setAuthToken(null);
+    setAuthToken("");
 
     // Set current user to empty object {} which will set isAuthenticated to false
-    dispatch(setCurrentUser(null));
+    dispatch(setCurrentUser({}));
 }

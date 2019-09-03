@@ -13,18 +13,18 @@ const usersService = require('../../service/users');
 // @access Public
 router.post("/register", async(req, res) => {
 
-   // Form validation
-   let validation = await validateRegisterInput(req.body);
+    // Form validation
+    let validation = await validateRegisterInput(req.body);
 
-   if(validation == "ok") {
+    if(validation == "ok") {
 
-       res.json(await(usersService.register(req.body)));
+        res.json(await(usersService.register(req.body)));
 
-   } else {
+    } else {
 
-       res.status(validation.statusCode).json(validation.message);
+        res.status(validation.statusCode).json(validation.message);
 
-   }
+    }
 
 });
 
@@ -33,18 +33,18 @@ router.post("/register", async(req, res) => {
 // @access Public
 router.post("/login", async(req, res) => {
 
-   // Form validation
-   let validation = await validateLoginInput(req.body);
+    // Form validation
+    let validation = await validateLoginInput(req.body);
 
-   if(validation == "ok") {
+    if(validation == "ok") {
 
-       res.json(await(usersService.login(req.body)));
+        res.json(await(usersService.login(req.body)));
 
-   } else {
+    } else {
 
-       res.status(validation.statusCode).json(validation.message);
+        res.status(validation.statusCode).json(validation.message);
 
-   }
+    }
    
 });
 
@@ -53,7 +53,7 @@ router.post("/login", async(req, res) => {
 // @access Private
 router.get('/:_id', async(req, res) => {
 
-  res.json(await usersService.getCurrentUser(req.params._id));
+    res.json(await usersService.getCurrentUser(req.params._id));
 
 });
 

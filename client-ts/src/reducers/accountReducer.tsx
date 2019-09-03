@@ -1,12 +1,12 @@
 import { GET_USER, USER_LOADING } from '../actions/types';
-import { IReducerAction } from '../../common/interfaces';
+import { IReducerAction } from '../common/interfaces';
 
-const initialState = {
+const initialState: any = {
     users: [],
     loading: false
 }
 
-export default function(state = initialState, action: IReducerAction) {
+export default function(state = initialState, action: any) {
     switch(action.type) {
         case GET_USER:
             return {

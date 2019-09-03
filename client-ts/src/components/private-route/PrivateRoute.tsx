@@ -1,13 +1,14 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { IAuthProp } from "../../../common/interfaces";
+import { IAuthProp } from "../../common/interfaces";
+import { AppState } from "../../reducers";
 
 interface Props {
     auth: IAuthProp;
 }
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+const PrivateRoute = ({ component: Component, auth, ...rest }: any) => (
   <Route
     {...rest}
     render={props =>
@@ -20,8 +21,8 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   />
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
     auth: state.auth
-});
+})
 
 export default connect(mapStateToProps)(PrivateRoute);

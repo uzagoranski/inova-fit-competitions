@@ -11,79 +11,78 @@ const usersRepository = require('../repository/users');
 
 module.exports = async function validateLoginInput(data: ILoginForm) {
 
-  // Find user by email
-  let user = await usersRepository.getUserByEmail(data.email);  
-  
-  // Convert empty fields to an empty string so we can use validator functions
-  data.email = !isEmpty(data.email) ? data.email : "";
-  data.password = !isEmpty(data.password) ? data.password : "";
-
-  // Email checks
-  if (Validator.isEmpty(data.email)) {
+    // Find user by email
+    let user = await usersRepository.getUserByEmail(data.email);  
     
-    try {
-      
-      throw new ValidationError("EmailEmpty");
+    // Convert empty fields to an empty string so we can use validator functions
+    data.email = !isEmpty(data.email) ? data.email : "";
+    data.password = !isEmpty(data.password) ? data.password : "";
 
-    } catch (err) {
+    // Email checks
+    if (Validator.isEmpty(data.email)) {
+        
+        try {
+        
+            throw new ValidationError("EmailEmpty");
 
-      return err;
-    
-    }
-    
-  } else if (!Validator.isEmail(data.email)) {
+        } catch (err) {
 
-    try {
-      
-      throw new ValidationError("EmailInvalid");
+            return err;
+        
+        }
+        
+    } else if (!Validator.isEmail(data.email)) {
 
-    } catch (err) {
+        try {
+        
+            throw new ValidationError("EmailInvalid");
 
-      return err;
-    
-    }
+        } catch (err) {
 
-  // Password checks
-  } else if (Validator.isEmpty(data.password)) {
+            return err;
+        
+        }
 
-    try {
-      
-      throw new ValidationError("PasswordEmpty");
+    // Password checks
+    } else if (Validator.isEmpty(data.password)) {
 
-    } catch (err) {
+        try {
+        
+            throw new ValidationError("PasswordEmpty");
 
-      return err;
-    
-    }
+        } catch (err) {
 
-  } else if (!user) {
+            return err;
+        
+        }
 
-    try {
-      
-      throw new ValidationError("UserNotFound");
+    } else if (!user) {
 
-    } catch (err) {
+        try {
+        
+            throw new ValidationError("UserNotFound");
 
-      return err;
-    
-    }
+        } catch (err) {
 
-  } else if (!await bcrypt.compare(data.password, user.password)) {
+            return err;
+        
+        }
 
-    try {
-      
-      throw new ValidationError("PasswordIncorrect");
+    } else if (!await bcrypt.compare(data.password, user.password)) {
 
-    } catch (err) {
+        try {
+        
+            throw new ValidationError("PasswordIncorrect");
 
-      return err;
-    
-    }
+        } catch (err) {
 
-  }  else {
+            return err;
+        
+        }
 
-    return "ok";
+    }  else {
 
-  }
-  
+        return "ok";
+
+    } 
 }

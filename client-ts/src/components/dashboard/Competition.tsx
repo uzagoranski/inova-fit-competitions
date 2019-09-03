@@ -6,37 +6,47 @@ import Media from 'react-media';
 import { getCompetition } from '../../actions/competitionActions';
 import { getRounds, deleteRound } from '../../actions/roundActions';
 import { getLeaderboard } from '../../actions/leaderboardActions';
-import { ICompetitionProp, IRoundProp, ILeaderboardProp } from '../../../common/interfaces';
+import { ICompetitionProp, IRoundProp, ILeaderboardProp } from '../../common/interfaces';
+import { AppState } from "../../reducers";
 
-interface Props {
-    getCompetition(id: string): any;
-    competition: ICompetitionProp;
-    getRounds(id: string): any;
-    round: IRoundProp;
-    getLeaderboard(id: string): any;
-    leaderboard: ILeaderboardProp;
-    deleteRound(id: string): any;
-    match: any;
+// Props
+interface ICompetitionProps {
+
+    competition: any,
+    round: any,
+    leaderboard: any,
+    match: any,
+    getCompetition: (id: string) => any,
+    getRounds: (id: string) => any,
+    getLeaderboard: (id: string) => any,
+    deleteRound: (id: string) => any
+
 }
 
-class Competition extends Component<Props> {
+class Competition extends Component<ICompetitionProps> {
 
     componentDidMount() {
+
         this.props.getCompetition(this.props.match.params._id);
         this.props.getRounds(this.props.match.params._id);
-        this.props.getLeaderboard(this.props.match.params._id);        
+        this.props.getLeaderboard(this.props.match.params._id);  
+
     }
 
     onDeleteClick = (_id: string) => {
+
         this.props.deleteRound(_id)
         setTimeout(this.props.getLeaderboard(this.props.match.params._id), 10000);
+
     }
 
     render() {
+
         const { competitions } = this.props.competition;
         const { rounds } = this.props.round;
         const { leaderboards } = this.props.leaderboard;
         let position = 0;
+
         return(
             <Media query="(min-width: 700px)">
                 {matches =>
@@ -80,7 +90,7 @@ class Competition extends Component<Props> {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        { rounds.map(({ _id, date, stravaSegmentID }) => (
+                                        { rounds.map(({ _id, date, stravaSegmentID }: any) => (
                                             <tr key={_id}>
                                                 <th scope="row"><Button
                                                         className="btn btn-small waves-effect waves-light hoverable red accent-3"                                            
@@ -115,8 +125,8 @@ class Competition extends Component<Props> {
                                         </thead>
                                         <tbody>
                                         { !(leaderboards === null) ?                           
-                                        leaderboards.map(({ _id, name, averageTime, totalDistance, numberOfRounds }) => (
-                                            <tr key={_id}>   
+                                        leaderboards.map(({ name, averageTime, totalDistance, numberOfRounds }: any) => (
+                                            <tr key={name}>   
                                                 <td style={{color: "red", fontWeight:"bold", paddingRight:"10px", paddingLeft:"10px"}}>
                                                     {++position}
                                                 </td>                                 
@@ -185,7 +195,7 @@ class Competition extends Component<Props> {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                { rounds.map(({ _id, date, stravaSegmentID }) => (
+                                                { rounds.map(({ _id, date, stravaSegmentID }: any) => (
                                                     <tr key={_id}>
                                                         <th scope="row"><Button
                                                                 className="btn btn-small waves-effect waves-light hoverable red accent-3"                                            
@@ -221,8 +231,8 @@ class Competition extends Component<Props> {
                                                 </thead>
                                                 <tbody>
                                             { !(leaderboards === null && leaderboards === "") ?                                                                          
-                                                leaderboards.map(({ _id, name, averageTime, totalDistance, numberOfRounds }) => (
-                                                    <tr key={_id}>   
+                                                leaderboards.map(({ name, averageTime, totalDistance, numberOfRounds }: any) => (
+                                                    <tr key={name}>   
                                                         <td style={{color: "red", fontWeight:"bold", paddingRight:"10px", paddingLeft:"10px"}}>
                                                             {++position}
                                                         </td>                                 
@@ -253,14 +263,14 @@ class Competition extends Component<Props> {
                         )
                     }
             </Media>            
-        );
+        )
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
     competition: state.competition,
     round: state.round,
     leaderboard: state.leaderboard,
-});
+})
 
 export default connect(mapStateToProps, { getCompetition, getRounds, deleteRound, getLeaderboard })(Competition);

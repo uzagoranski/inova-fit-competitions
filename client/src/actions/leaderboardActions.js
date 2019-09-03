@@ -9,14 +9,14 @@ export const getLeaderboard = (_id) => async(dispatch) => {
 
         let res = await axios.get(`/api/leaderboard/${_id}`);
 
-        dispatch({
+        await dispatch({
             type: GET_LEADERBOARD,
             payload: res.data
         });
 
     } catch (err) {
 
-        dispatch({
+        await dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         });

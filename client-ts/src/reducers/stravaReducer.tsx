@@ -1,12 +1,12 @@
 import { USER_LOADING, REFRESH_TOKEN, CONNECT_STRAVA, DISCONNECT_STRAVA } from '../actions/types';
-import { IReducerAction } from '../../common/interfaces';
+import { IReducerAction } from '../common/interfaces';
 
-const initialState = {
+const initialState: any = {
     strava: [],
     loading: false
 }
 
-export default function(state = initialState, action: IReducerAction) {
+export default function(state = initialState, action: any) {
     switch(action.type) {              
         case CONNECT_STRAVA:
             return {

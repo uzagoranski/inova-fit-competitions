@@ -2,21 +2,28 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
-import { IAuthProp } from "../../../common/interfaces";
+import { IAuthProp } from "../../common/interfaces";
+import { AppState } from "../../reducers";
 
-interface Props {
-    logoutUser(): any;
-    auth: IAuthProp;
+// Props
+interface IFooterProps {
+
+    auth: IAuthProp,
+    logoutUser: () => any
+
 }
 
-class Footer extends Component<Props> {
+class Footer extends Component<IFooterProps> {
 
-    onLogoutClick = (e: Event) => {
+    onLogoutClick = (e: any) => {
+
         e.preventDefault();
         this.props.logoutUser();
-    };
+
+    }
     
     render() {
+        
         return (
             <footer>
                 <div className="container">
@@ -70,15 +77,12 @@ class Footer extends Component<Props> {
                     </div> 
                 </div>
             </footer>
-        );
+        )
     }
 }
   
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
     auth: state.auth
-});
+})
 
-export default connect(
-    mapStateToProps,
-    { logoutUser }
-)(Footer);
+export default connect(mapStateToProps, { logoutUser })(Footer);

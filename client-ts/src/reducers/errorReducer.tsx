@@ -1,9 +1,9 @@
 import { GET_ERRORS } from "../actions/types";
-import { IReducerAction } from "../../common/interfaces";
+import { IReducerAction } from "../common/interfaces";
 
 const initialState = {};
 
-export default function(state = initialState, action: IReducerAction) {
+export default function(state = initialState, action: any) {
   switch (action.type) {
     case GET_ERRORS:
       return action.payload;
