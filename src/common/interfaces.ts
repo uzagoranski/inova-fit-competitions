@@ -43,6 +43,16 @@ export interface IStravaRefreshToken {
     }
 }
 
+// Leaderboard
+export interface ILeaderboard {
+    userID: string,
+    name: string,
+    competitionID: string,
+    averageTime: number,
+    totalDistance: number,
+    numberOfRounds: number
+}
+
 // Error middleware
 export interface IError {
     type: string,

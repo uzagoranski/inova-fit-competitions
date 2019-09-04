@@ -1,4 +1,5 @@
-import { IError } from "./common/interfaces";
+import { Request } from "request";
+import { Response } from "express-serve-static-core";
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -56,7 +57,7 @@ if(process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));
 
-    app.get('*', (req: any, res: any) => {
+    app.get('*', (req: Request, res: Response) => {
         res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
     });
 }

@@ -57,7 +57,7 @@ class CompetitionsClass {
     async deleteCompetition(_id: string) { 
 
         try {
-            await Promise.all([Competition.findByIdAndDelete(_id), Round.deleteMany({ "competitionID": _id }), Stats.deleteMany({ "competitionID": _id })])
+            await Promise.all([Stats.deleteMany({ "competitionID": _id }), Round.deleteMany({ "competitionID": _id }), Competition.findByIdAndDelete(_id)])
         }
         catch(err) {
             return err;

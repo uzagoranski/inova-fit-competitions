@@ -1,3 +1,14 @@
+// Dependencies
+import winston from 'winston';
+
+// Logger configuration
+const logConfiguration = {
+    'transports': [
+        new winston.transports.Console()
+    ]
+};
+
+// Map
 const map: any = {
     EmailAlreadyExists: {
         message: {
@@ -102,7 +113,15 @@ class ValidationError extends Error {
         
         super();
 
-        return map[errorCode];
+        let response = map[errorCode];
+
+        // Create the logger
+        const logger = winston.createLogger(logConfiguration);
+
+        // Log a message
+        logger.error(response.message, {title: errorCode});
+
+        return response;
     }
 }
 

@@ -32,21 +32,21 @@ class CompetitionsClass {
     // Get current competition
     async getSelectedCompetition(_id: string) {
 
-        return competitionsRepository.getSelectedCompetition(_id);
+        return await competitionsRepository.getSelectedCompetition(_id);
 
     }
 
     // Delete competition
     async deleteCompetition(_id: string) { 
 
-        return competitionsRepository.deleteCompetition(_id);
+        return await competitionsRepository.deleteCompetition(_id);
 
     }
 
     // Get competition by name
     async getCompetitionByName(name: string) {
 
-        return competitionsRepository.getCompetitionByName(name);
+        return await competitionsRepository.getCompetitionByName(name);
 
     }
 }

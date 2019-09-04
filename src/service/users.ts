@@ -37,7 +37,7 @@ class UsersClass {
 
         }
 
-        return response;
+        return await response;
     }
 
     // User login
@@ -76,7 +76,7 @@ class UsersClass {
             
         }
 
-        return response;    
+        return await response;    
     }
 
     // Get current user

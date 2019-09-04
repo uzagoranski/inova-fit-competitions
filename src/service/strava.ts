@@ -20,14 +20,14 @@ class StravaClass {
             grant_type: "authorization_code"
         });
         
-        return stravaRepository.connectStrava(tokens, _id, expiration);
+        return await stravaRepository.connectStrava(tokens, _id, expiration);
 
     }
 
     // Remove Strava connection
     async disconnectStrava(_id: string) {
 
-        return stravaRepository.disconnectStrava(_id);
+        return await stravaRepository.disconnectStrava(_id);
         
     }
 
@@ -43,7 +43,7 @@ class StravaClass {
             grant_type: "refresh_token"
         });
 
-        return stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
+        return await stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
 
     }
 }

@@ -47,7 +47,7 @@ class RoundsClass {
             let competitionID = round.competitionID;
             let stravaSegmentID = round.stravaSegmentID;
 
-            await Promise.all([round.remove(), Stats.deleteMany({ "competitionID": competitionID, "segmentID": stravaSegmentID })]);
+            await Promise.all([Stats.deleteMany({ "competitionID": competitionID, "segmentID": stravaSegmentID }), round.remove()]);
         
             response = {success: true};
         }

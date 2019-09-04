@@ -1,3 +1,6 @@
+// Dependencies
+import arraySort from 'array-sort';
+
 // Repository
 const leaderboardRepository = require('../repository/leaderboard');
 
@@ -46,7 +49,7 @@ class LeaderboardClass {
                 );
             }
         
-            response = responseValue;     
+            response = arraySort(responseValue, 'averageTime');     
             
         }
         catch(err) {
