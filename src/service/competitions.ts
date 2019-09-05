@@ -4,6 +4,9 @@ const competitionsRepository = require('../repository/competitions');
 // Interfaces
 import  { IAddCompetitionForm } from '../common/interfaces';
 
+// Custom errors
+import ValidationError from '../middleware/errors';
+
 class CompetitionsClass {
 
     // Full list of all competitions
@@ -15,6 +18,15 @@ class CompetitionsClass {
 
     // Add competition
     async addCompetition(body: IAddCompetitionForm) {
+        
+        // Find competition by name
+        let competition = await competitionsRepository.getCompetitionByName(body.name);
+
+        if(competition[0]) {
+
+            throw new ValidationError("NameAlreadyExists");
+
+        }
       
         return competitionsRepository.addCompetition(body.name);
       

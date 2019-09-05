@@ -1,11 +1,22 @@
+// Dependencies
 import express from "express";
 const router = express.Router();
 
-// Load input validation
-const validateAddCompetitionInput = require("../../validation/addCompetition");
-
 // Service
 const competitionsService = require('../../service/competitions');
+
+// Validation deps.
+import ValidationError from "../../middleware/errors";
+const { celebrate, Joi } = require('celebrate');
+
+// Celebrate add competition input validation
+const competitionValidator = celebrate({
+
+    body: Joi.object().keys({
+        name: Joi.string().required().error(new ValidationError("NameEmpty"))
+    })
+    
+});
 
 // @route   GET api/competitions
 // @desc    Get all competitions
@@ -19,12 +30,9 @@ router.get('/', async(req, res) => {
 // @route   POST api/competitions
 // @desc    Add a new competition
 // @access  Private
-router.post('/', async(req, res, next) => {
+router.post('/', competitionValidator, async(req, res, next) => {
 
     try {
-
-            // Form validation
-        await validateAddCompetitionInput(req.body);
 
         res.json(await(competitionsService.addCompetition(req.body)));
 

@@ -75,15 +75,21 @@ const logConfiguration = {
 const logger = winston.createLogger(logConfiguration);
 
 // Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: Function) => {
+app.use((err: any, req: Request, res: Response, next: Function) => {
 
     if (err instanceof ValidationError) {
 
         logger.error({ title: err.title, message: err.message, stack: err.stack });
         res.status(err.statusCode).json(err.message);   
 
+    } else if (err.joi instanceof ValidationError) {
+    
+        logger.error({ title: err.joi.title, message: err.joi.message, stack: err.joi.stack });
+        res.status(err.joi.statusCode).json(err.joi.message);   
+
     } else {
 
+        console.log(err)
         logger.error({ message: err.message, stack: err.stack });
         res.status(500).json({ message: err.message || 'Unknown error' });
         

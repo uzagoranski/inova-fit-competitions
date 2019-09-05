@@ -7,6 +7,9 @@ const roundsRepository = require('../repository/rounds');
 // Interfaces
 import  { IAddRoundForm } from '../common/interfaces';
 
+// Custom errors
+import ValidationError from '../middleware/errors';
+
 class RoundsClass {
 
     // Get full list of all rounds
@@ -18,6 +21,15 @@ class RoundsClass {
 
     // Add round
     async addRound(body: IAddRoundForm) {
+
+        // Find round by name
+        let round = await roundsRepository.getRoundBySegmentId(body.competitionId, body.stravaSegmentId);
+
+        if (round[0]) {
+
+            throw new ValidationError("StravaSegmentIdAlreadyExists");
+
+        }
 
         const newRound = {
             date: body.date,

@@ -1,11 +1,24 @@
+// Dependencies
 import express from "express";
 const router = express.Router();
 
-// Load input validation
-const validateAddRoundInput = require("../../validation/addRound");
-
 // Service
 const roundsService = require('../../service/rounds');
+
+// Validation deps.
+import ValidationError from "../../middleware/errors";
+const { celebrate, Joi } = require('celebrate');
+
+// Celebrate add round input validation
+const roundValidator = celebrate({
+
+    body: Joi.object().keys({
+        date: Joi.string().required().error(new ValidationError("DateEmpty")),
+        competitionId: Joi.string().required(),
+        stravaSegmentId: Joi.number().required().error(new ValidationError("StravaSegmentIdEmpty"))
+    })
+    
+});
 
 // @route   GET api/rounds/:_id
 // @desc    Get all rounds from selected competition
@@ -19,12 +32,9 @@ router.get('/:_id', async(req, res) => {
 // @route   POST api/rounds
 // @desc    Post a new round
 // @access  Private
-router.post('/', async(req, res, next) => {
+router.post('/', roundValidator, async(req, res, next) => {
 
     try {
-
-        // Form validation
-        await validateAddRoundInput(req.body);
 
         res.json(await(roundsService.addRound(req.body)));
 
