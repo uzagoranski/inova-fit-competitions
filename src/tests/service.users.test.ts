@@ -68,8 +68,8 @@ describe('Users service tests', () => {
 
         let user;
 
-        for(let i in usersList) {
-            if(usersList[i].email == "test@gmail.com") {
+        for (let i in usersList) {
+            if (usersList[i].email == "test@gmail.com") {
                 user = usersList[i];
                 break;
             } else {
@@ -97,8 +97,8 @@ describe('Users service tests', () => {
 
         let currentUser;
 
-        for(let i in usersList) {
-            if(usersList[i]._id == "5do91f51x19db504f493st30") {
+        for (let i in usersList) {
+            if (usersList[i]._id == "5do91f51x19db504f493st30") {
                 currentUser = usersList[i];
                 break;
             } else {

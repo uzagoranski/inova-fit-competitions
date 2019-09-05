@@ -17,48 +17,22 @@ module.exports = async function validateAddRoundInput(data: IAddRoundForm) {
     data.date = !isEmpty(data.date) ? data.date : "";
     data.stravaSegmentId = !isEmpty(data.stravaSegmentId) ? data.stravaSegmentId : "";
 
-    // Date checks
+    // Input checks
     if (Validator.isEmpty(data.date)) {
-        
-        try {
-        
-            throw new ValidationError("DateEmpty");
 
-        } catch (err) {
+        throw new ValidationError("DateEmpty");
 
-            return err;
-        
-        }
-        
-    // Id checks
     } else if (Validator.isEmpty(data.stravaSegmentId)) {
-        
-        try {
-        
-            throw new ValidationError("StravaSegmentIdEmpty");
 
-        } catch (err) {
+        throw new ValidationError("StravaSegmentIdEmpty");
 
-            return err;
-        
-        }
-        
-    // Round checks
     } else if (round[0]) {
-        
-        try {
-        
-            throw new ValidationError("StravaSegmentIdAlreadyExists");
 
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("StravaSegmentIdAlreadyExists");
     
     } else {
         
-        return "ok";
+        return true;
 
     }
 }

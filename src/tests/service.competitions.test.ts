@@ -104,8 +104,8 @@ describe('Competition service tests', () => {
 
         let competition;
 
-        for(let i in competitionsList) {
-            if(competitionsList[i]._id == "5d5fc24b21c99613763837b6") {
+        for (let i in competitionsList) {
+            if (competitionsList[i]._id == "5d5fc24b21c99613763837b6") {
                 competition = competitionsList[i];
                 break;
             } else {
@@ -132,8 +132,8 @@ describe('Competition service tests', () => {
         let mark = 0;
         let response = { success: false };
 
-        for(let i in competitionsList) {
-            if(competitionsList[i]._id == "5d5cfef13338410bc16b9d37") {
+        for (let i in competitionsList) {
+            if (competitionsList[i]._id == "5d5cfef13338410bc16b9d37") {
                 competitionsList.splice(mark, 1);
                 response = { success: true };
                 break;
@@ -154,8 +154,8 @@ describe('Competition service tests', () => {
 
         let selectedCompetition;
 
-        for(let i in competitionsList) {
-            if(competitionsList[i].name.match('Test 234')) {
+        for (let i in competitionsList) {
+            if (competitionsList[i].name.match('Test 234')) {
                 selectedCompetition = competitionsList[i];
             } else {
                 continue;

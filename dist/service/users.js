@@ -53,7 +53,7 @@ class UsersClass {
                     name: user.name
                 };
                 // Sign token
-                const token = yield jwt.sign(payload, keys.secretOrKey, {
+                const token = yield jwt.sign(payload, process.env.secretOrKey, {
                     expiresIn: 31556926 // 1 year in seconds
                 });
                 response =

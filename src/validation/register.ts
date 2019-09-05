@@ -19,109 +19,42 @@ module.exports = async function validateRegisterInput(data: IRegistrationForm) {
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
-    // Name checks
+    // Input checks
     if (Validator.isEmpty(data.name)) {
-        
-        try {
-        
-            throw new ValidationError("NameEmpty");
 
-        } catch (err) {
+        throw new ValidationError("NameEmpty");
 
-            return err;
-        
-        }
-
-    // Email checks
     } else if (Validator.isEmpty(data.email)) {
-        
-        try {
-        
-            throw new ValidationError("EmailEmpty");
-
-        } catch (err) {
-
-            return err;
-        
-        }
+ 
+        throw new ValidationError("EmailEmpty");
 
     } else if (!Validator.isEmail(data.email)) {
-        
-        try {
-        
-            throw new ValidationError("EmailInvalid");
 
-        } catch (err) {
+        throw new ValidationError("EmailInvalid");
 
-            return err;
-        
-        }
-
-    // Password checks
     } else if (Validator.isEmpty(data.password)) {
-        
-        try {
-        
-            throw new ValidationError("PasswordEmpty");
 
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("PasswordEmpty");
 
     } else if (Validator.isEmpty(data.password2)) {
-        
-        try {
-            
-            throw new ValidationError("Password2Empty");
 
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("Password2Empty");
 
     } else if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
 
-        try {
-            
-            throw new ValidationError("PasswordInvalid");
-
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("PasswordInvalid");
 
     } else if (!Validator.equals(data.password, data.password2)) {
 
-        try {
-            
-            throw new ValidationError("PasswordDismatch");
-
-        } catch (err) {
-
-            return err;
+        throw new ValidationError("PasswordDismatch");
         
-        }
-        
-    // User checks
     } else if (user) {
 
-        try {
-            
-            throw new ValidationError("UserAlreadyExists");
-
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("UserAlreadyExists");
 
     } else {
 
-        return "ok";
+        return true;
 
     }
 }

@@ -116,8 +116,8 @@ describe('Rounds service tests', () => {
         let mark = 0;
         let response = { success: false };
 
-        for(let i in roundsList) {
-            if(roundsList[i]._id == "22418d78aerwb504f49340fs") {
+        for (let i in roundsList) {
+            if (roundsList[i]._id == "22418d78aerwb504f49340fs") {
                 roundsList.splice(mark, 1);
                 response = { success: true };
                 break;
@@ -138,8 +138,8 @@ describe('Rounds service tests', () => {
 
         let selectedRound;
 
-        for(let i in roundsList) {
-            if(roundsList[i].stravaSegmentId.match('1111111')) {
+        for (let i in roundsList) {
+            if (roundsList[i].stravaSegmentId.match('1111111')) {
                 selectedRound = roundsList[i];
             } else {
                 continue;

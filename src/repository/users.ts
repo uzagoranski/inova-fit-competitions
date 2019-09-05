@@ -6,65 +6,29 @@ class UsersClass {
     // Get user by email
     async getUserByEmail(email: string) {
         
-        let response;
-
-        try {
-            response = await User.findOne({ email: email });
-        }
-        catch(err) {
-            response = err;
-        }
-
-        return response;
-
+       return User.findOne({ email: email });
+     
     }
 
     // Add new user
     async register(name: string, email: string, password: string) {
         
-        let response;
-
-        try {
-            response = await User.create({ name: name, email: email, password: password });
-        }
-        catch(err) {
-            response = err;
-        }
-
-        return response;
+       return User.create({ name: name, email: email, password: password });
 
     }
 
     // Get user by id
     async getUserByID(_id: string) {
 
-        let response;
-
-        try {
-            response = await User.findById(_id);
-        }
-        catch(err) {
-            response = err;
-        }
-
-        return response;  
+        return User.findById(_id);
 
     }
 
     // Get all Strava authenticated users
     async getStravaUsers() {
         
-        let response;
-
-        try {
-            response = await User.where("stravaUserID").ne("");
-        }
-        catch(err) {
-            response = err;
-        }
-
-        return response;
-
+        return User.where("stravaUserID").ne("");
+    
     }   
 }
 

@@ -117,8 +117,8 @@ describe('Strava service tests', () => {
 
         let response = { success: false };
 
-        for(let i in usersList) {
-            if(usersList[i]._id == "5do91f51x19db504f493st30") {
+        for (let i in usersList) {
+            if (usersList[i]._id == "5do91f51x19db504f493st30") {
 
                 usersList[i].stravaAccessToken = "";
                 usersList[i].stravaRefreshToken = "";

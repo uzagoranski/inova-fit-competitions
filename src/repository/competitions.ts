@@ -8,60 +8,28 @@ class CompetitionsClass {
     // Competitions list
     async getAllCompetitions() {
 
-        let response;
-
-        try {
-            response = await Competition.find().sort({ date: -1 });
-        }
-        catch(err) {
-            response = err;
-        }
-
-        return response;
-
+        return Competition.find().sort({ date: -1 });
+     
     }
 
     // Add competition
     async addCompetition(name: String) {
         
-        let response;
-
-        try {    
-            response = await Competition.create({ name: name });
-        }
-        catch(err) {
-            response = err;
-        }
-
-        return response;
+        return Competition.create({ name: name });
 
     }
 
     // Get selected competition
     async getSelectedCompetition(_id: string) {
         
-        let response;
-
-        try {    
-            response = await Competition.findById(_id);
-        }
-        catch(err) {
-            response = err;
-        }
-        
-        return response;
+        return Competition.findById(_id);
 
     }
 
     // Delete competition
     async deleteCompetition(_id: string) { 
 
-        try {
-            await Promise.all([Stats.deleteMany({ "competitionID": _id }), Round.deleteMany({ "competitionID": _id }), Competition.findByIdAndDelete(_id)])
-        }
-        catch(err) {
-            return err;
-        }
+        await Promise.all([Stats.deleteMany({ "competitionID": _id }), Round.deleteMany({ "competitionID": _id }), Competition.findByIdAndDelete(_id)])
 
         return { success: true };
         
@@ -70,16 +38,7 @@ class CompetitionsClass {
     // Get competition by name
     async getCompetitionByName(name: string) {
         
-        let response;
-
-        try {    
-            response = await Competition.find({ "name": name });
-        }
-        catch(err) {
-            response = err;
-        }
-        
-        return response;
+        return Competition.find({ "name": name });
 
     }
 }

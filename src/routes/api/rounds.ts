@@ -19,21 +19,20 @@ router.get('/:_id', async(req, res) => {
 // @route   POST api/rounds
 // @desc    Post a new round
 // @access  Private
-router.post('/', async(req, res) => {
+router.post('/', async(req, res, next) => {
 
-    // Form validation
-    let validation = await validateAddRoundInput(req.body);
+    try {
 
-    if(validation == "ok") {
+        // Form validation
+        await validateAddRoundInput(req.body);
 
         res.json(await(roundsService.addRound(req.body)));
 
-    } else {
+    } catch (err) {
 
-        res.status(validation.statusCode).json(validation.message);
+        next(err);
 
     }
-
 });
 
 // @route   DELETE api/rounds/:_id

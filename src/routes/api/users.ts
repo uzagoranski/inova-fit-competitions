@@ -11,41 +11,39 @@ const usersService = require('../../service/users');
 // @route POST api/users/register
 // @desc Register user
 // @access Public
-router.post("/register", async(req, res) => {
+router.post("/register", async(req, res, next) => {
 
-    // Form validation
-    let validation = await validateRegisterInput(req.body);
+    try {
 
-    if(validation == "ok") {
+         // Form validation
+        await validateRegisterInput(req.body);
 
         res.json(await(usersService.register(req.body)));
 
-    } else {
+    } catch (err) {
 
-        res.status(validation.statusCode).json(validation.message);
+        next(err);
 
     }
-
 });
 
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
-router.post("/login", async(req, res) => {
+router.post("/login", async(req, res, next) => {
 
-    // Form validation
-    let validation = await validateLoginInput(req.body);
-
-    if(validation == "ok") {
+    try {
+         
+        // Form validation
+        await validateLoginInput(req.body);
 
         res.json(await(usersService.login(req.body)));
 
-    } else {
-
-        res.status(validation.statusCode).json(validation.message);
+    } catch (err) {
+            
+       next(err);
 
     }
-   
 });
 
 // @route GET api/users/:_id

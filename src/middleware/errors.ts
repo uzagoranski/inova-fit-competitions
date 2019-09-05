@@ -1,13 +1,3 @@
-// Dependencies
-import winston from 'winston';
-
-// Logger configuration
-const logConfiguration = {
-    'transports': [
-        new winston.transports.Console()
-    ]
-};
-
 // Map
 const map: any = {
     EmailAlreadyExists: {
@@ -109,19 +99,18 @@ const map: any = {
 }
 
 class ValidationError extends Error {
+    
+    title: string;
+    statusCode: number;
+
     constructor(errorCode: string) {
         
         super();
 
-        let response = map[errorCode];
+        this.title = errorCode;
+        this.message = map[errorCode].message;
+        this.statusCode = map[errorCode].statusCode;
 
-        // Create the logger
-        const logger = winston.createLogger(logConfiguration);
-
-        // Log a message
-        logger.error(response.message, {title: errorCode});
-
-        return response;
     }
 }
 

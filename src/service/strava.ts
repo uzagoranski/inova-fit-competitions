@@ -1,7 +1,9 @@
 // Dependencies
 import axios from 'axios';
-const stravaClientId = require("../config/keys").stravaClientId;
-const stravaClientSecret = require("../config/keys").stravaClientSecret;
+require('dotenv').config();
+
+const stravaClientId = process.env.stravaClientId;
+const stravaClientSecret = process.env.stravaClientSecret;
 
 // Repository
 const stravaRepository = require('../repository/strava');
@@ -20,14 +22,14 @@ class StravaClass {
             grant_type: "authorization_code"
         });
         
-        return await stravaRepository.connectStrava(tokens, _id, expiration);
+        return stravaRepository.connectStrava(tokens, _id, expiration);
 
     }
 
     // Remove Strava connection
     async disconnectStrava(_id: string) {
 
-        return await stravaRepository.disconnectStrava(_id);
+        return stravaRepository.disconnectStrava(_id);
         
     }
 
@@ -43,7 +45,7 @@ class StravaClass {
             grant_type: "refresh_token"
         });
 
-        return await stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
+        return stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
 
     }
 }

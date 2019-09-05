@@ -1,6 +1,9 @@
 import { Request } from "request";
 import { Response } from "express-serve-static-core";
+import ValidationError from "./middleware/errors";
+import winston from 'winston';
 
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -24,8 +27,7 @@ app.use(
 app.use(bodyParser.json());
 
 // DB Config
-const keys = require("./config/keys");
-const db = keys.mongoURI;
+const db = process.env.mongoURI;
 
 // Connect to MongoDB
 mongoose
@@ -34,7 +36,7 @@ mongoose
         { useNewUrlParser: true }
     )
     .then(() => console.log("MongoDB successfully connected"))
-    .catch((err: string) => console.log(err));
+    .catch ((err: string) => console.log(err));
 
 mongoose.set('useFindAndModify', false);
 
@@ -53,7 +55,7 @@ app.use("/api/stats", stats);
 app.use("/api/leaderboard", leaderboard);
 
 // Serve static assets if in production
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));
 
@@ -62,11 +64,31 @@ if(process.env.NODE_ENV === 'production') {
     });
 }
 
+// Logger configuration
+const logConfiguration = {
+    'transports': [
+        new winston.transports.Console()
+    ]
+};
+
+// Create the logger
+const logger = winston.createLogger(logConfiguration);
+
 // Error handling middleware
-/* app.use(function(payload: any, req: any, res: any, next: any) {
-  console.log(payload.statusCode)
-  res.status(payload.statusCode).json(payload.message);
-}); */
+app.use((err: Error, req: Request, res: Response, next: Function) => {
+
+    if (err instanceof ValidationError) {
+
+        logger.error({ title: err.title, message: err.message, stack: err.stack });
+        res.status(err.statusCode).json(err.message);   
+
+    } else {
+
+        logger.error({ message: err.message, stack: err.stack });
+        res.status(500).json({ message: err.message || 'Unknown error' });
+        
+    }  
+});
 
 const port = process.env.PORT || 5000; 
 

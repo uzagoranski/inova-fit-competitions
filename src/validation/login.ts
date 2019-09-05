@@ -13,76 +13,35 @@ module.exports = async function validateLoginInput(data: ILoginForm) {
 
     // Find user by email
     let user = await usersRepository.getUserByEmail(data.email);  
-    
+
     // Convert empty fields to an empty string so we can use validator functions
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
 
-    // Email checks
+    // Input checks
     if (Validator.isEmpty(data.email)) {
-        
-        try {
-        
-            throw new ValidationError("EmailEmpty");
 
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("EmailEmpty");
         
     } else if (!Validator.isEmail(data.email)) {
 
-        try {
-        
-            throw new ValidationError("EmailInvalid");
+        throw new ValidationError("EmailInvalid");
 
-        } catch (err) {
-
-            return err;
-        
-        }
-
-    // Password checks
     } else if (Validator.isEmpty(data.password)) {
 
-        try {
-        
-            throw new ValidationError("PasswordEmpty");
-
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("PasswordEmpty");
 
     } else if (!user) {
 
-        try {
-        
-            throw new ValidationError("UserNotFound");
-
-        } catch (err) {
-
-            return err;
-        
-        }
+        throw new ValidationError("UserNotFound");
 
     } else if (!await bcrypt.compare(data.password, user.password)) {
 
-        try {
-        
-            throw new ValidationError("PasswordIncorrect");
+        throw new ValidationError("PasswordIncorrect");
 
-        } catch (err) {
+    } else {
 
-            return err;
-        
-        }
-
-    }  else {
-
-        return "ok";
+        return true;
 
     } 
 }

@@ -9,55 +9,45 @@ class LeaderboardClass {
     // Reload leaderboard for selected competition
     async getLeaderboard(competitionID: string) {
 
-        let response;
-        
-        try {
-            let stats = await leaderboardRepository.getAllStatsForCompetition(competitionID);
+        let stats = await leaderboardRepository.getAllStatsForCompetition(competitionID);
 
-            let userIDs = await leaderboardRepository.getDistinctUserIDs(competitionID);
+        let userIDs = await leaderboardRepository.getDistinctUserIDs(competitionID);
 
-            let responseValue = [];
+        let responseValue = [];
 
-            for(let i in userIDs) {
+        for (let i in userIDs) {
 
-                let name = "";
-                let totalTime = 0;
-                let averageTime = 0;
-                let totalDistance = 0;
-                let numberOfRounds = 0;
+            let name = "";
+            let totalTime = 0;
+            let averageTime = 0;
+            let totalDistance = 0;
+            let numberOfRounds = 0;
 
-                for(let j in stats) {                
-                    if(stats[j].userID == userIDs[i]) {
-                        numberOfRounds++;
-                        totalTime += stats[j].elapsedTime;
-                        totalDistance += stats[j].distance;
-                        name = stats[j].name;
-                    }          
-                }
-                averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100; 
-                totalDistance = Math.round(totalDistance * 100) / 100; 
-
-                responseValue.push(
-                    {
-                        userID: userIDs[i],
-                        name: name,
-                        competitionID: competitionID,
-                        averageTime: averageTime,
-                        totalDistance: totalDistance,
-                        numberOfRounds: numberOfRounds
-                    }
-                );
+            for (let j in stats) {                
+                if (stats[j].userID == userIDs[i]) {
+                    numberOfRounds++;
+                    totalTime += stats[j].elapsedTime;
+                    totalDistance += stats[j].distance;
+                    name = stats[j].name;
+                }          
             }
-        
-            response = arraySort(responseValue, 'averageTime');     
-            
-        }
-        catch(err) {
-            response = err;
-        }
+            averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100; 
+            totalDistance = Math.round(totalDistance * 100) / 100; 
 
-        return response;
-
+            responseValue.push(
+                {
+                    userID: userIDs[i],
+                    name: name,
+                    competitionID: competitionID,
+                    averageTime: averageTime,
+                    totalDistance: totalDistance,
+                    numberOfRounds: numberOfRounds
+                }
+            );
+        }
+    
+        return arraySort(responseValue, 'averageTime');     
+       
     }
 }
 

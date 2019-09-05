@@ -16,36 +16,18 @@ module.exports = async function validateAddCompetitionInput(data: IAddCompetitio
     // Convert empty fields to an empty string so we can use validator functions
     data.name = !isEmpty(data.name) ? data.name : "";
 
-    // Name checks
+    // Input checks
     if (Validator.isEmpty(data.name)) {
+      
+        throw new ValidationError("NameEmpty");
         
-        try {
-        
-            throw new ValidationError("NameEmpty");
-
-        } catch (err) {
-
-            return err;
-        
-        }
-        
-    // Competition checks
     } else if (competition[0]) {
-
-        try {
         
-            throw new ValidationError("NameAlreadyExists");
+        throw new ValidationError("NameAlreadyExists");
 
-        } catch (err) {
+    } else {
 
-            return err;
-        
-        }
-
-    }
-    else {
-
-        return "ok";
+        return true;
         
     }
 }
