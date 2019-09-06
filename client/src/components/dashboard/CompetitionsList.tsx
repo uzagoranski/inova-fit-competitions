@@ -34,7 +34,11 @@ class CompetitionsList extends Component<ICompetitionsListProps> {
 
     render() {
 
-        const { competitions } = this.props.competition;
+        let { competitions } = this.props.competition;
+
+        if (!Array.isArray(competitions)){
+            competitions = [competitions];
+        }
 
         return(
             <div style={{ minHeight: "70vh", marginTop: "130px" }} className="container valign-wrapper">
