@@ -16,6 +16,7 @@ module.exports =  {
         "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "no-plusplus": "off",
-        "array-callback-return": "off"
+        "array-callback-return": "off",
+        "no-console": "off"
       } 
 };
