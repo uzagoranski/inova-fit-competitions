@@ -38,9 +38,9 @@ class CompetitionsClass {
     // Get competition by name
     async getCompetitionByName(name: string) {
         
-        return Competition.find({ "name": name });
+        return Competition.findOne({ "name": name });
 
     }
 }
 
-module.exports = new CompetitionsClass();
+export default new CompetitionsClass();

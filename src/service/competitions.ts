@@ -1,10 +1,6 @@
-// Repository
-const competitionsRepository = require('../repository/competitions');
-
-// Interfaces
-import  { IAddCompetitionForm } from '../common/interfaces';
-
-// Custom errors
+// Dependencies
+import competitionsRepository from '../repository/competitions';
+import { IAddCompetitionForm } from '../common/interfaces';
 import ValidationError from '../middleware/errors';
 
 class CompetitionsClass {
@@ -22,7 +18,7 @@ class CompetitionsClass {
         // Find competition by name
         let competition = await competitionsRepository.getCompetitionByName(body.name);
 
-        if(competition[0]) {
+        if(competition) {
 
             throw new ValidationError("NameAlreadyExists");
 
@@ -54,4 +50,4 @@ class CompetitionsClass {
     }
 }
 
-module.exports = new CompetitionsClass();
+export default new CompetitionsClass();

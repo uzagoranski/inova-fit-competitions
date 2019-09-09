@@ -1,10 +1,9 @@
 // Dependencies
 import express from "express";
-const router = express.Router();
+import stravaService from '../../service/strava';
+import statsService from '../../service/stats';
 
-// Service
-const stravaService = require('../../service/strava');
-const statsService = require('../../service/stats');
+const router = express.Router();
 
 // @route PUT api/strava/:_id/:code
 // @desc Authorize user with incoming Strava code
@@ -37,4 +36,4 @@ router.put("/refreshToken/:_id/:refresh_token", async(req, res) => {
 
 });
 
-module.exports = router;
+export default router;

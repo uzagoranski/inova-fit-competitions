@@ -1,12 +1,12 @@
 // Dependencies
 import axios from 'axios';
+import stravaRepository from '../repository/strava';
+
 require('dotenv').config();
 
 const stravaClientId = process.env.stravaClientId;
 const stravaClientSecret = process.env.stravaClientSecret;
 
-// Repository
-const stravaRepository = require('../repository/strava');
 
 class StravaClass {
     
@@ -45,9 +45,9 @@ class StravaClass {
             grant_type: "refresh_token"
         });
 
-        return stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
+        return await stravaRepository.refreshAuthenticationToken(tokens, _id, expiration);
 
     }
 }
 
-module.exports = new StravaClass();
+export default new StravaClass();

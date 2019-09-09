@@ -18,4 +18,4 @@ class LeaderboardClass {
     }
 }
 
-module.exports = new LeaderboardClass();
+export default new LeaderboardClass();

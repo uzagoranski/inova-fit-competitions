@@ -1,18 +1,12 @@
 // Dependencies
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-require('dotenv').config();
-
-// Repository
-const usersRepository = require('../repository/users');
-
-// Interfaces
-import  { IRegistrationForm } from '../common/interfaces';
-import  { ILoginForm } from '../common/interfaces';
-
-// Custom errors
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import usersRepository from '../repository/users';
+import { IRegistrationForm, ILoginForm } from '../common/interfaces';
 import ValidationError from '../middleware/errors';
 import Validator from "validator";
+
+require('dotenv').config();
 
 class UsersClass {
 
@@ -48,8 +42,8 @@ class UsersClass {
         }
 
         // Hash password before saving user in database
-        bcrypt.genSalt(10, (err: string, salt: string) => {
-            bcrypt.hash(newUser.password, salt, (err: string, hash: string) => {
+        bcrypt.genSalt(10, (err: Error, salt: string) => {
+            bcrypt.hash(newUser.password, salt, (err: Error, hash: string) => {
                 newUser.password = hash;
                 return usersRepository.register(newUser.name, newUser.email, newUser.password);
             });
@@ -111,4 +105,4 @@ class UsersClass {
     }
 }
 
-module.exports = new UsersClass();
+export default new UsersClass();

@@ -1,21 +1,21 @@
-import { Request } from "request";
-import { Response } from "express-serve-static-core";
+// Dependencies
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import path from "path";
+import passport from "passport";
 import ValidationError from "./middleware/errors";
 import winston from 'winston';
+import users from "./routes/api/users";
+import competitions from "./routes/api/competitions";
+import rounds from "./routes/api/rounds";
+import strava from "./routes/api/strava";
+import stats from "./routes/api/stats";
+import leaderboard from "./routes/api/leaderboard";
 
 require('dotenv').config();
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+
 const app = express();
-const path = require("path");
-const passport = require("passport");
-const users = require("./routes/api/users");
-const competitions = require("./routes/api/competitions");
-const rounds = require("./routes/api/rounds");
-const strava = require("./routes/api/strava");
-const stats = require("./routes/api/stats");
-const leaderboard = require("./routes/api/leaderboard");
 
 // Bodyparser middleware
 app.use(
@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));
 
-    app.get('*', (req: Request, res: Response) => {
+    app.get('*', (req: any, res: any) => {
         res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
     });
 }
@@ -75,7 +75,7 @@ const logConfiguration = {
 const logger = winston.createLogger(logConfiguration);
 
 // Error handling middleware
-app.use((err: any, req: Request, res: Response, next: Function) => {
+app.use((err: any, req: any, res: any, next: Function) => {
 
     if (err instanceof ValidationError) {
 

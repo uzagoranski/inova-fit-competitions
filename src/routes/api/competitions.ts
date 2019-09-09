@@ -1,13 +1,10 @@
 // Dependencies
 import express from "express";
-const router = express.Router();
-
-// Service
-const competitionsService = require('../../service/competitions');
-
-// Validation deps.
+import competitionsService from '../../service/competitions';
 import ValidationError from "../../middleware/errors";
-const { celebrate, Joi } = require('celebrate');
+import { celebrate, Joi } from 'celebrate';
+
+const router = express.Router();
 
 // Celebrate add competition input validation
 const competitionValidator = celebrate({
@@ -61,4 +58,4 @@ router.delete('/:_id', async(req, res) => {
 
 });
 
-module.exports = router;
+export default router;

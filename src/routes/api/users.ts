@@ -1,13 +1,10 @@
 // Dependencies
 import express from "express";
-const router = express.Router();
-
-// Service
-const usersService = require('../../service/users');
-
-// Validation deps.
+import usersService from '../../service/users';
 import ValidationError from "../../middleware/errors";
-const { celebrate, Joi } = require('celebrate');
+import { celebrate, Joi } from 'celebrate';
+
+const router = express.Router();
 
 // Celebrate login input validation
 const loginValidator = celebrate({
@@ -71,4 +68,4 @@ router.get('/:_id', async(req, res) => {
 
 });
 
-module.exports = router;
+export default router;

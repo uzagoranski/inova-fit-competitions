@@ -16,6 +16,6 @@ const CompetitionSchema: Schema = new Schema({
     }
 });
 
-const Competition =  mongoose.model<ICompetition>('competition', CompetitionSchema);
+const Competition = mongoose.model<ICompetition>('competition', CompetitionSchema);
 
 export default Competition;

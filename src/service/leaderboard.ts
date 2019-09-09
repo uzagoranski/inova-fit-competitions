@@ -1,8 +1,6 @@
 // Dependencies
 import arraySort from 'array-sort';
-
-// Repository
-const leaderboardRepository = require('../repository/leaderboard');
+import leaderboardRepository from '../repository/leaderboard';
 
 class LeaderboardClass {
 
@@ -51,4 +49,4 @@ class LeaderboardClass {
     }
 }
 
-module.exports = new LeaderboardClass();
+export default new LeaderboardClass();

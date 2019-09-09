@@ -18,4 +18,4 @@ class StatsClass {
     }
 }
 
-module.exports = new StatsClass();
+export default new StatsClass();

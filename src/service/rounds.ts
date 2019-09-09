@@ -1,13 +1,7 @@
 // Dependencies
-const axios = require('axios');
-
-// Repository
-const roundsRepository = require('../repository/rounds');
-
-// Interfaces
-import  { IAddRoundForm } from '../common/interfaces';
-
-// Custom errors
+import roundsRepository from '../repository/rounds';
+import statsService from '../service/stats';
+import { IAddRoundForm } from '../common/interfaces';
 import ValidationError from '../middleware/errors';
 
 class RoundsClass {
@@ -25,7 +19,7 @@ class RoundsClass {
         // Find round by name
         let round = await roundsRepository.getRoundBySegmentId(body.competitionId, body.stravaSegmentId);
 
-        if (round[0]) {
+        if (round) {
 
             throw new ValidationError("StravaSegmentIdAlreadyExists");
 
@@ -37,7 +31,7 @@ class RoundsClass {
             stravaSegmentID: body.stravaSegmentId
         }
 
-        await axios.get(`http://localhost:5000/api/stats/${newRound.competitionID}/${newRound.stravaSegmentID}`);
+        await statsService.addStatsRound(newRound.competitionID, newRound.stravaSegmentID);
 
         return roundsRepository.addRound(newRound.date, newRound.competitionID, newRound.stravaSegmentID);
                 
@@ -58,4 +52,4 @@ class RoundsClass {
     }
 }
 
-module.exports = new RoundsClass();
+export default new RoundsClass();

@@ -32,4 +32,4 @@ class UsersClass {
     }   
 }
 
-module.exports = new UsersClass();
+export default new UsersClass();

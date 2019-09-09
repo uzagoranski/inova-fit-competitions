@@ -1,10 +1,9 @@
 // Dependencies
 import axios from 'axios';
-
-// Repository
-const statsRepository = require('../repository/stats');
-const usersRepository = require('../repository/users');
-const roundsRepository = require('../repository/rounds');
+import statsRepository from '../repository/stats';
+import usersRepository from '../repository/users';
+import roundsRepository from '../repository/rounds';
+import stravaService from '../service/strava';
 
 class StatsClass {
 
@@ -21,7 +20,7 @@ class StatsClass {
     
             if (user.accessTokenExpirationDate <= new Date()) {
     
-                await axios.put(`http://localhost:5000/api/strava/refreshToken/${user._id}/${user.stravaRefreshToken}`);
+                await stravaService.refreshAuthenticationToken(user.stravaRefreshToken, user._id);
     
             }
     
@@ -65,7 +64,7 @@ class StatsClass {
 
             if (user.accessTokenExpirationDate <= new Date()) {
 
-                await axios.put(`http://localhost:5000/api/strava/refreshToken/${user._id}/${user.stravaRefreshToken}`);
+                await stravaService.refreshAuthenticationToken(user.stravaRefreshToken, user._id);
 
             }
 
@@ -82,7 +81,7 @@ class StatsClass {
                         userID: user._id,
                         name: user.name,
                         competitionID: segment.competitionID,
-                        segmentID: segment._id,
+                        segmentID: segment.stravaSegmentID,
                         elapsedTime: stats.data[v].elapsed_time,
                         distance: stats.data[v].distance         
                     }
@@ -95,4 +94,4 @@ class StatsClass {
     }
 }
 
-module.exports = new StatsClass();
+export default new StatsClass();

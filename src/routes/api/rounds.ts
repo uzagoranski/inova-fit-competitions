@@ -1,13 +1,10 @@
 // Dependencies
 import express from "express";
-const router = express.Router();
-
-// Service
-const roundsService = require('../../service/rounds');
-
-// Validation deps.
+import roundsService from '../../service/rounds';
 import ValidationError from "../../middleware/errors";
-const { celebrate, Joi } = require('celebrate');
+import { celebrate, Joi } from 'celebrate';
+
+const router = express.Router();
 
 // Celebrate add round input validation
 const roundValidator = celebrate({
@@ -54,4 +51,4 @@ router.delete('/:_id', async(req, res) => {
 
 });
 
-module.exports = router;
+export default router;

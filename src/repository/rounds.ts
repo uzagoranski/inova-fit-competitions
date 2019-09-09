@@ -12,7 +12,7 @@ class RoundsClass {
     }
 
     // Add round
-    async addRound(date: Date, competitionID: string, stravaSegmentID: string) {
+    async addRound(date: string, competitionID: string, stravaSegmentID: string) {
 
         return Round.create({ date: date, competitionID: competitionID, stravaSegmentID: stravaSegmentID });
 
@@ -44,9 +44,9 @@ class RoundsClass {
     // Get round by segment id
     async getRoundBySegmentId(competitionID: string, stravaSegmentID: string) {
 
-        return Round.find({ "competitionID": competitionID, "stravaSegmentID": stravaSegmentID });
+        return Round.findOne({ "competitionID": competitionID, "stravaSegmentID": stravaSegmentID });
   
     }
 }
 
-module.exports = new RoundsClass();
+export default new RoundsClass();

@@ -1,9 +1,8 @@
 // Dependencies
 import express from "express";
-const router = express.Router();
+import statsService from '../../service/stats';
 
-// Service
-const statsService = require('../../service/stats');
+const router = express.Router();
 
 // @route GET api/stats/:competionID/:segmentID
 // @desc Get all users with Strava connection within "New Round" method
@@ -14,4 +13,4 @@ router.get("/:competitionID/:segmentID", async(req, res) => {
 
 });
 
-module.exports = router;
+export default router;

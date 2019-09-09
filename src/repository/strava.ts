@@ -31,4 +31,4 @@ class StravaClass {
     }
 }
 
-module.exports = new StravaClass();
+export default new StravaClass();

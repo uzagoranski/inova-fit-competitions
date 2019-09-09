@@ -1,9 +1,8 @@
 // Dependencies
 import express from "express";
-const router = express.Router();
+import leaderboardService from '../../service/leaderboard';
 
-// Service
-const leaderboardService = require('../../service/leaderboard');
+const router = express.Router();
 
 // @route GET api/leaderboard/:competitionID
 // @desc Reload leaderboard for selected competition
@@ -14,4 +13,4 @@ router.get("/:competitionID", async(req, res) => {
          
 });
 
-module.exports = router;
+export default router;
