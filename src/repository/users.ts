@@ -5,15 +5,15 @@ class UsersClass {
 
     // Get user by email
     async getUserByEmail(email: string) {
-        
-       return User.findOne({ email: email });
-     
+
+       return User.findOne({ email });
+
     }
 
     // Add new user
     async register(name: string, email: string, password: string) {
-        
-       return User.create({ name: name, email: email, password: password });
+
+       return User.create({ name, email, password });
 
     }
 
@@ -26,10 +26,10 @@ class UsersClass {
 
     // Get all Strava authenticated users
     async getStravaUsers() {
-        
-        return User.where("stravaUserID").ne("");
-    
-    }   
+
+        return User.where('stravaUserID').ne('');
+
+    }
 }
 
 export default new UsersClass();

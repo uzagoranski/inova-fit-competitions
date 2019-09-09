@@ -1,6 +1,6 @@
 // Dependencies
 import roundsRepository from '../repository/rounds';
-import statsService from '../service/stats';
+import statsService from './stats';
 import { IAddRoundForm } from '../common/interfaces';
 import ValidationError from '../middleware/errors';
 
@@ -8,7 +8,7 @@ class RoundsClass {
 
     // Get full list of all rounds
     async getRounds(competitionID: string) {
-        
+
         return roundsRepository.getRounds(competitionID);
 
     }
@@ -17,11 +17,11 @@ class RoundsClass {
     async addRound(body: IAddRoundForm) {
 
         // Find round by name
-        let round = await roundsRepository.getRoundBySegmentId(body.competitionId, body.stravaSegmentId);
+        const round = await roundsRepository.getRoundBySegmentId(body.competitionId, body.stravaSegmentId);
 
         if (round) {
 
-            throw new ValidationError("StravaSegmentIdAlreadyExists");
+            throw new ValidationError('StravaSegmentIdAlreadyExists');
 
         }
 
@@ -29,12 +29,12 @@ class RoundsClass {
             date: body.date,
             competitionID: body.competitionId,
             stravaSegmentID: body.stravaSegmentId
-        }
+        };
 
         await statsService.addStatsRound(newRound.competitionID, newRound.stravaSegmentID);
 
         return roundsRepository.addRound(newRound.date, newRound.competitionID, newRound.stravaSegmentID);
-                
+
     }
 
     // Delete round and stats

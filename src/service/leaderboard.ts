@@ -7,45 +7,46 @@ class LeaderboardClass {
     // Reload leaderboard for selected competition
     async getLeaderboard(competitionID: string) {
 
-        let stats = await leaderboardRepository.getAllStatsForCompetition(competitionID);
+        const stats = await leaderboardRepository.getAllStatsForCompetition(competitionID);
 
-        let userIDs = await leaderboardRepository.getDistinctUserIDs(competitionID);
+        const userIDs = await leaderboardRepository.getDistinctUserIDs(competitionID);
 
-        let responseValue = [];
+        const responseValue: any = [];
 
-        for (let i in userIDs) {
+        userIDs.map((distinctUserID: any) => {
 
-            let name = "";
+            let username = '';
             let totalTime = 0;
             let averageTime = 0;
             let totalDistance = 0;
             let numberOfRounds = 0;
 
-            for (let j in stats) {                
-                if (stats[j].userID == userIDs[i]) {
+            stats.map(async ({ name, userID, elapsedTime, distance }: any) => {
+                if (userID === distinctUserID) {
                     numberOfRounds++;
-                    totalTime += stats[j].elapsedTime;
-                    totalDistance += stats[j].distance;
-                    name = stats[j].name;
-                }          
-            }
-            averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100; 
-            totalDistance = Math.round(totalDistance * 100) / 100; 
+                    totalTime += elapsedTime;
+                    totalDistance += distance;
+                    username = name;
+                }
+            });
+
+            averageTime = Math.round((totalTime / numberOfRounds) * 100) / 100;
+            totalDistance = Math.round(totalDistance * 100) / 100;
 
             responseValue.push(
                 {
-                    userID: userIDs[i],
-                    name: name,
-                    competitionID: competitionID,
-                    averageTime: averageTime,
-                    totalDistance: totalDistance,
-                    numberOfRounds: numberOfRounds
+                    userID: distinctUserID,
+                    username,
+                    competitionID,
+                    averageTime,
+                    totalDistance,
+                    numberOfRounds
                 }
             );
-        }
-    
-        return arraySort(responseValue, 'averageTime');     
-       
+        });
+
+        return arraySort(responseValue, 'averageTime');
+
     }
 }
 

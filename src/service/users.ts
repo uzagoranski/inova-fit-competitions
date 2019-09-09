@@ -1,10 +1,10 @@
 // Dependencies
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import Validator from 'validator';
 import usersRepository from '../repository/users';
 import { IRegistrationForm, ILoginForm } from '../common/interfaces';
 import ValidationError from '../middleware/errors';
-import Validator from "validator";
 
 require('dotenv').config();
 
@@ -12,26 +12,26 @@ class UsersClass {
 
     // User registration
     async register(body: IRegistrationForm) {
-           
+
         // Find user by email
-        let user = await usersRepository.getUserByEmail(body.email);    
+        const user = await usersRepository.getUserByEmail(body.email);
 
         // Validation
         if (!Validator.isEmail(body.email)) {
 
-            throw new ValidationError("EmailInvalid");
+            throw new ValidationError('EmailInvalid');
 
         } else if (user) {
 
-            throw new ValidationError("UserAlreadyExists");
+            throw new ValidationError('UserAlreadyExists');
 
         } else if (!Validator.isLength(body.password, { min: 6, max: 30 })) {
 
-            throw new ValidationError("PasswordInvalid");
-    
+            throw new ValidationError('PasswordInvalid');
+
         } else if (!Validator.equals(body.password, body.password2)) {
-    
-            throw new ValidationError("PasswordDismatch");
+
+            throw new ValidationError('PasswordDismatch');
 
         }
 
@@ -39,11 +39,11 @@ class UsersClass {
             name: body.name,
             email: body.email,
             password: body.password
-        }
+        };
 
         // Hash password before saving user in database
         bcrypt.genSalt(10, (err: Error, salt: string) => {
-            bcrypt.hash(newUser.password, salt, (err: Error, hash: string) => {
+            bcrypt.hash(newUser.password, salt, (_err: Error, hash: string) => {
                 newUser.password = hash;
                 return usersRepository.register(newUser.name, newUser.email, newUser.password);
             });
@@ -54,22 +54,22 @@ class UsersClass {
     async login(body: ILoginForm) {
 
         // Find user by email
-        let user = await usersRepository.getUserByEmail(body.email);    
+        const user = await usersRepository.getUserByEmail(body.email);
 
         // Validation
 
         // Validation
         if (!Validator.isEmail(body.email)) {
 
-            throw new ValidationError("EmailInvalid");
+            throw new ValidationError('EmailInvalid');
 
         } else if (!user) {
 
-            throw new ValidationError("UserNotFound");
-    
+            throw new ValidationError('UserNotFound');
+
         } else if (!await bcrypt.compare(body.password, user.password)) {
-    
-            throw new ValidationError("PasswordIncorrect");
+
+            throw new ValidationError('PasswordIncorrect');
 
         }
 
@@ -88,13 +88,12 @@ class UsersClass {
             }
         );
 
-        let response =
-            {
+        const response = {
                 success: true,
-                token: "Bearer " + token
-            } 
+                token: `Bearer ${token}`
+            };
 
-        return response;    
+        return response;
     }
 
     // Get current user

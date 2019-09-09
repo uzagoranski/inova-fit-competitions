@@ -14,18 +14,18 @@ class CompetitionsClass {
 
     // Add competition
     async addCompetition(body: IAddCompetitionForm) {
-        
+
         // Find competition by name
-        let competition = await competitionsRepository.getCompetitionByName(body.name);
+        const competition = await competitionsRepository.getCompetitionByName(body.name);
 
-        if(competition) {
+        if (competition) {
 
-            throw new ValidationError("NameAlreadyExists");
+            throw new ValidationError('NameAlreadyExists');
 
         }
-      
+
         return competitionsRepository.addCompetition(body.name);
-      
+
     }
 
     // Get current competition
@@ -36,7 +36,7 @@ class CompetitionsClass {
     }
 
     // Delete competition
-    async deleteCompetition(_id: string) { 
+    async deleteCompetition(_id: string) {
 
         return competitionsRepository.deleteCompetition(_id);
 

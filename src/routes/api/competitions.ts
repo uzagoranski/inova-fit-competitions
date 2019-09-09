@@ -1,8 +1,8 @@
 // Dependencies
-import express from "express";
-import competitionsService from '../../service/competitions';
-import ValidationError from "../../middleware/errors";
+import express from 'express';
 import { celebrate, Joi } from 'celebrate';
+import competitionsService from '../../service/competitions';
+import ValidationError from '../../middleware/errors';
 
 const router = express.Router();
 
@@ -10,15 +10,15 @@ const router = express.Router();
 const competitionValidator = celebrate({
 
     body: Joi.object().keys({
-        name: Joi.string().required().error(new ValidationError("NameEmpty"))
+        name: Joi.string().required().error(new ValidationError('NameEmpty'))
     })
-    
+
 });
 
 // @route   GET api/competitions
 // @desc    Get all competitions
 // @access  Private
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
 
     res.json(await competitionsService.getAllCompetitions());
 
@@ -27,11 +27,11 @@ router.get('/', async(req, res) => {
 // @route   POST api/competitions
 // @desc    Add a new competition
 // @access  Private
-router.post('/', competitionValidator, async(req, res, next) => {
+router.post('/', competitionValidator, async (req, res, next) => {
 
     try {
 
-        res.json(await(competitionsService.addCompetition(req.body)));
+        res.json(await (competitionsService.addCompetition(req.body)));
 
     } catch (err) {
 
@@ -43,18 +43,18 @@ router.post('/', competitionValidator, async(req, res, next) => {
 // @route   GET api/competitions/:_id
 // @desc    Get selected competition
 // @access  Private
-router.get('/:_id', async(req, res) => {
+router.get('/:_id', async (req, res) => {
 
-    res.json(await(competitionsService.getSelectedCompetition(req.params._id)));
+    res.json(await (competitionsService.getSelectedCompetition(req.params._id)));
 
 });
 
 // @route   DELETE api/competitions/:_id
 // @desc    Delete a competition
 // @access  Private
-router.delete('/:_id', async(req, res) => {
-    
-    res.json(await(competitionsService.deleteCompetition(req.params._id)));
+router.delete('/:_id', async (req, res) => {
+
+    res.json(await (competitionsService.deleteCompetition(req.params._id)));
 
 });
 

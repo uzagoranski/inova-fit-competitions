@@ -30,19 +30,19 @@ const UserSchema: Schema = new Schema({
   },
   stravaUserID: {
     type: String,
-    default: ""
+    default: ''
   },
   stravaAccessToken: {
     type: String,
-    default: ""
+    default: ''
   },
   stravaRefreshToken: {
     type: String,
-    default: ""
+    default: ''
   },
   accessTokenExpirationDate: {
     type: Date,
-    default: ""
+    default: ''
   }
 });
 

@@ -124,13 +124,13 @@ class Competition extends Component<ICompetitionProps> {
                                         </thead>
                                         <tbody>
                                         { !(leaderboards === null) ?  
-                                        leaderboards.map(({ name, averageTime, totalDistance, numberOfRounds }: any) => (
-                                            <tr key={name}>   
+                                        leaderboards.map(({ username, averageTime, totalDistance, numberOfRounds }: any) => (
+                                            <tr key={username}>   
                                                 <td style={{color: "red", fontWeight:"bold", paddingRight:"10px", paddingLeft:"10px"}}>
                                                     {++position}
                                                 </td>                                 
                                                 <td>
-                                                    { name }
+                                                    { username }
                                                 </td>
                                                 <td>
                                                     { averageTime }
@@ -230,13 +230,13 @@ class Competition extends Component<ICompetitionProps> {
                                                 </thead>
                                                 <tbody>
                                             { !(leaderboards === null && leaderboards === "") ?                                                                          
-                                                leaderboards.map(({ name, averageTime, totalDistance, numberOfRounds }: any) => (
-                                                    <tr key={name}>   
+                                                leaderboards.map(({ username, averageTime, totalDistance, numberOfRounds }: any) => (
+                                                    <tr key={username}>   
                                                         <td style={{color: "red", fontWeight:"bold", paddingRight:"10px", paddingLeft:"10px"}}>
                                                             {++position}
                                                         </td>                                 
                                                         <td>
-                                                            { name }
+                                                            { username }
                                                         </td>
                                                         <td>
                                                             { averageTime }
